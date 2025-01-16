@@ -1,0 +1,14 @@
+.App {
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  font-size: 300%;
+}
+
+p {
+  font-family: 'Montserrat';
+  font-weight: 500;
+}
