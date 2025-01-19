@@ -1,5 +1,5 @@
 :root {
-  --spotifyGreen: #1ED760
+  --spotifyGreen: #1ed760;
 }
 
 .Login {
@@ -8,19 +8,19 @@
 }
 
 h1 {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 4em;
 }
 
 p {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 1.5em;
-  font-weight: lighter;
 }
 
 .spotify-button {
   text-align: center;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
+  font-weight: 800;
   letter-spacing: 0.5px;
   background-color: var(--spotifyGreen);
   border: none;
@@ -34,6 +34,8 @@ p {
   background-color: #53ff8f;
 }
 
-.spotify-button:active, .spotify-button:focus, .spotify-button:disabled {
+.spotify-button:active,
+.spotify-button:focus,
+.spotify-button:disabled {
   background-color: #21d861;
 }
