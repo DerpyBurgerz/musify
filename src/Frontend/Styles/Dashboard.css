@@ -26,6 +26,82 @@
     font-size: 15px;
 }
 
+select {
+    font-family: Arial;
+    font-size: 14px;
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    width: 100%;
+    cursor: pointer;
+}
+
+.rc-slider {
+    height: 6px;
+    margin: 20px 0;
+    min-width: 75px;
+}
+
+.rc-slider-rail {
+    background-color: #e0e0e0 !important;
+    height: 6px !important;
+    border-radius: 3px !important;
+}
+
+.rc-slider-track {
+    background-color: #007bff !important;
+    height: 6px !important;
+    border-radius: 3px !important;
+}
+
+.rc-slider-handle {
+    width: 16px !important;
+    height: 16px !important;
+    background-color: #ffffff !important;
+    border: 2px solid #007bff !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: transform 0.2s ease !important;
+}
+
+.rc-slider-handle:hover {
+    border-color: #0056b3 !important;
+}
+
+.rc-slider-handle:focus {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important;
+}
+
+.rc-slider-handle:active {
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important;
+}
+
+.BpmSlider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    min-width: 150px;
+}
+
+.BpmDisplay {
+    width: 50px;
+    padding: 3px;
+    text-align: center;
+    font-size: 12px;
+    font-family: Arial;
+    font-weight: 400;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16px;
+    cursor: default;
+}
+
 .SelectedSong {
     flex: 1;
     flex-basis: 50%;
@@ -60,11 +136,11 @@
     justify-content: center;
     align-items: center;
     max-width: 100%;
+    height: auto;
 }
 
 .SelectedCoverImage {
     max-width: 100%;
-    max-height: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -148,30 +224,25 @@
     text-align: center;
 }
 
-.SelectedCoverImage {
-    width: 100px;
-    height: auto;
-    margin-top: 10px;
-}
-
-
 @media (max-width: 800px) {
     .Dashboard {
         flex-direction: column;
     }
 
     .Filters {
-        flex-basis: auto;
+        flex-basis: 20%;
         height: auto;
+        max-height: 260px;
         padding: 0.5rem;
     }
 
     .SelectedSong {
-        flex-basis: 100%; 
+        flex-basis: 30%; 
+        min-height: 390px;
     }
 
     .Recommendations {
-        flex-basis: 100%;
+        flex-basis: 30%;
         display: flex;
         flex-direction: column;
         padding: 0.5rem;
