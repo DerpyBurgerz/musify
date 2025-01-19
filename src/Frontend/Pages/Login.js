@@ -12,6 +12,7 @@ const Login = () => {
   return (
     <div className="Login">
       <h1>musify.</h1>
+      <p></p>
       <button className="spotify-button" onClick={loginRedirect}>
         Login with Spotify
       </button>

@@ -13,7 +13,8 @@ import cover6 from "../Images/song6.jpg";
 function Dashboard() {
   const [selectedSong, setSelectedSong] = useState(null);
   const [genreFilter, setGenreFilter] = useState("");
-  const [bpmRange, setBpmRange] = useState([65, 220]);
+  const [bpmRangeFilter, setBpmRangeFilter] = useState([0, 999999]);
+  const [bpmRangeInput, setBpmRangeInput] = useState([0, 220]);
 
   const recommendedSongs = [
     {
@@ -62,16 +63,26 @@ function Dashboard() {
       duration: "02:40",
       coverImage: cover6,
       genre: "Rap",
-      bpm: 115,
+      bpm: 999,
     },
   ];
 
   const filteredSongs = recommendedSongs.filter(
     (song) =>
       (genreFilter === "" || song.genre === genreFilter) &&
-      song.bpm >= bpmRange[0] &&
-      song.bpm <= bpmRange[1]
+      song.bpm >= bpmRangeFilter[0] &&
+      song.bpm <= bpmRangeFilter[1]
   );
+
+  const handleBpmChange = (value) => {
+    setBpmRangeInput(value);
+    if (value[1] == 220) {
+      setBpmRangeFilter([value[0], 9999999]);
+    } else {
+      setBpmRangeFilter(value);
+    }
+    console.log(value, bpmRangeFilter);
+  };
 
   return (
     <div className="Dashboard">
@@ -96,19 +107,21 @@ function Dashboard() {
         <div className="BpmFilter">
           <h3>BPM Range:</h3>
           <div className="BpmSlider">
-            <div className="BpmDisplay">{bpmRange[0]}</div>
+            <div className="BpmDisplay">{bpmRangeInput[0]}</div>
             <Slider
               range
-              min={65}
+              min={0}
               max={220}
               step={1}
-              value={bpmRange}
+              value={bpmRangeInput}
               onChange={(value) => {
-                setBpmRange(value);
+                handleBpmChange(value);
                 setSelectedSong(null);
               }}
             />
-            <div className="BpmDisplay">{bpmRange[1]}</div>
+            <div className="BpmDisplay">
+              {bpmRangeInput[1] == 220 ? "220+" : bpmRangeInput[1]}
+            </div>
           </div>
         </div>
       </div>
@@ -136,7 +149,7 @@ function Dashboard() {
         )}
       </div>
       <div className="Recommendations">
-        <h2>Your Recommendations:</h2>
+        <h2>Recommendations for you.</h2>
         <div className="RecommendedSongList">
           {filteredSongs.map((song, index) => (
             <div
@@ -156,11 +169,12 @@ function Dashboard() {
               </div>
               <div className="CoverSection">
                 <p className="Duration">{song.duration}</p>
-                <img
-                  src={song.coverImage}
-                  alt={`${song.songName} cover`}
-                  className="CoverImage"
-                />
+                <div className="CoverImage">
+                  <img src={song.coverImage} alt={`${song.songName} cover`} />
+                  <span class="PlayButton material-symbols-outlined">
+                    play_arrow
+                  </span>
+                </div>
               </div>
             </div>
           ))}
