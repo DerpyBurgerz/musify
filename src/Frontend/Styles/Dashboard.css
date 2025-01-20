@@ -20,10 +20,19 @@
   margin-bottom: 1rem;
 }
 
+.Filters p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .Filters label {
   display: block;
   margin-bottom: 1rem;
   font-size: 15px;
+}
+
+.GenreFilter h3 {
+  font-size: 16px;
 }
 
 select {
@@ -39,7 +48,6 @@ select {
 
 .rc-slider {
   height: 6px;
-  margin: 20px 0;
   min-width: 75px;
 }
 
@@ -77,6 +85,10 @@ select {
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important;
 }
 
+.BpmFilter h3 {
+  font-size: 16px;
+}
+
 .BpmSlider {
   display: flex;
   align-items: center;
@@ -100,6 +112,44 @@ select {
   justify-content: center;
   height: 16px;
   cursor: default;
+}
+
+.ArtistFamiliarityFilter h3 {
+  font-size: 16px;
+}
+
+.ArtistFamiliaritySlider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ArtistFamiliaritySlider .rc-slider {
+  width: 150px;
+  margin: 0 10px;
+}
+
+.ArtistFamiliaritySlider .rc-slider-track {
+  background-color: #007bff !important;
+}
+
+.ArtistFamiliaritySlider .rc-slider-rail {
+  background-color: #007bff !important;
+}
+
+.AllowRerecommendedFilter {
+  display: flex;
+}
+
+.AllowRerecommendedCheckbox {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.AllowRerecommendedFilter h3 {
+  margin: 0;
+  font-size: 16px;
 }
 
 .SelectedSong {
@@ -260,13 +310,13 @@ select {
   .Filters {
     flex-basis: 20%;
     height: auto;
-    max-height: 260px;
+    max-height: 340px;
     padding: 0.5rem;
   }
 
   .SelectedSong {
     flex-basis: 30%;
-    min-height: 390px;
+    min-height: 420px;
   }
 
   .Recommendations {

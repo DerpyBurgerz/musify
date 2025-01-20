@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",
+    "rc-checkbox": "^3.5.0",
     "rc-slider": "^11.1.8",
     "rc-tooltip": "^6.4.0",
     "react": "^19.0.0",

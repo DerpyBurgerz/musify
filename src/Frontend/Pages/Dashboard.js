@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Slider from "rc-slider";
+import Checkbox from "rc-checkbox";
 import "rc-slider/assets/index.css";
 import "../Styles/Dashboard.css";
 
@@ -12,6 +13,8 @@ import cover6 from "../Images/song6.jpg";
 
 function Dashboard() {
   const [selectedSong, setSelectedSong] = useState(null);
+
+  // Filters
   const [genreFilter, setGenreFilter] = useState("");
   const [bpmRangeFilter, setBpmRangeFilter] = useState([0, 999999]);
   const [bpmRangeInput, setBpmRangeInput] = useState([0, 220]);
@@ -76,7 +79,7 @@ function Dashboard() {
 
   const handleBpmChange = (value) => {
     setBpmRangeInput(value);
-    if (value[1] == 220) {
+    if (value[1] === 220) {
       setBpmRangeFilter([value[0], 9999999]);
     } else {
       setBpmRangeFilter(value);
@@ -88,7 +91,7 @@ function Dashboard() {
     <div className="Dashboard">
       <div className="Filters">
         <h2>Filters</h2>
-        <label>
+        <div className="GenreFilter">
           <h3>Genre:</h3>
           <select
             name="Genre"
@@ -103,7 +106,7 @@ function Dashboard() {
             <option value="Rap">Rap</option>
             <option value="EDM">EDM</option>
           </select>
-        </label>
+        </div>
         <div className="BpmFilter">
           <h3>BPM Range:</h3>
           <div className="BpmSlider">
@@ -120,8 +123,22 @@ function Dashboard() {
               }}
             />
             <div className="BpmDisplay">
-              {bpmRangeInput[1] == 220 ? "220+" : bpmRangeInput[1]}
+              {bpmRangeInput[1] === 220 ? "220+" : bpmRangeInput[1]}
             </div>
+          </div>
+        </div>
+        <div className="ArtistFamiliarityFilter">
+          <h3>Artist familiarity:</h3>
+          <div className="ArtistFamiliaritySlider">
+            <p>Only artists I know</p>
+            <Slider min={0} max={100} className="AFSlider"></Slider>
+            <p>Only new artists</p>
+          </div>
+        </div>
+        <div className="AllowRerecommendedFilter">
+          <h3>Allow rerecommended songs:</h3>
+          <div className="AllowRerecommendedCheckbox">
+            <Checkbox />
           </div>
         </div>
       </div>
