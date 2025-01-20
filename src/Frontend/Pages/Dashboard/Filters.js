@@ -10,6 +10,10 @@ function Filters({
   setBpmRangeInput,
   setBpmRangeFilter,
   setSelectedSong,
+  familiarityFilter,
+  setFamiliarityFilter,
+  isRerecommendAllowed,
+  setIsRerecommendAllowed,
 }) {
   const handleBpmChange = (value) => {
     setBpmRangeInput(value);
@@ -63,14 +67,29 @@ function Filters({
         <h3>Artist familiarity:</h3>
         <div className="ArtistFamiliaritySlider">
           <p>Only artists I know</p>
-          <Slider min={0} max={100} className="AFSlider"></Slider>
+          <Slider
+            min={0}
+            max={100}
+            value={familiarityFilter * 100}
+            onChange={(value) => {
+              setFamiliarityFilter(value / 100);
+              setSelectedSong(null);
+            }}
+            className="AFSlider"
+          ></Slider>
           <p>Only new artists</p>
         </div>
       </div>
       <div className="AllowRerecommendedFilter">
         <h3>Allow rerecommended songs:</h3>
         <div className="AllowRerecommendedCheckbox">
-          <Checkbox />
+          <Checkbox
+            checked={isRerecommendAllowed}
+            onChange={() => {
+              setIsRerecommendAllowed(!isRerecommendAllowed);
+              setSelectedSong(null);
+            }}
+          />
         </div>
       </div>
     </div>

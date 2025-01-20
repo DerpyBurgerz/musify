@@ -22,6 +22,8 @@ function Dashboard() {
   const [genreFilter, setGenreFilter] = useState("");
   const [bpmRangeFilter, setBpmRangeFilter] = useState([0, 999999]);
   const [bpmRangeInput, setBpmRangeInput] = useState([0, 220]);
+  const [familiarityFilter, setFamiliarityFilter] = useState(0.5);
+  const [isRerecommendAllowed, setIsRerecommendAllowed] = useState(true);
 
   const recommendedSongs = [
     {
@@ -31,6 +33,8 @@ function Dashboard() {
       coverImage: cover1,
       genre: "EDM",
       bpm: 128,
+      familiarityWithArtist: 0.95,
+      recommendedBefore: true,
     },
     {
       songName: "Song 2",
@@ -39,6 +43,8 @@ function Dashboard() {
       coverImage: cover2,
       genre: "Pop",
       bpm: 100,
+      familiarityWithArtist: 0.62,
+      recommendedBefore: false,
     },
     {
       songName: "Song 3",
@@ -47,6 +53,8 @@ function Dashboard() {
       coverImage: cover3,
       genre: "EDM",
       bpm: 150,
+      familiarityWithArtist: 0.2,
+      recommendedBefore: false,
     },
     {
       songName: "Song 4",
@@ -55,6 +63,8 @@ function Dashboard() {
       coverImage: cover4,
       genre: "Rap",
       bpm: 120,
+      familiarityWithArtist: 0.8,
+      recommendedBefore: true,
     },
     {
       songName: "Song 5",
@@ -63,6 +73,8 @@ function Dashboard() {
       coverImage: cover5,
       genre: "Pop",
       bpm: 130,
+      familiarityWithArtist: 0,
+      recommendedBefore: false,
     },
     {
       songName: "A very long song name",
@@ -70,16 +82,30 @@ function Dashboard() {
       duration: "02:40",
       coverImage: cover6,
       genre: "Rap",
-      bpm: 999,
+      bpm: 400,
+      familiarityWithArtist: 0.9,
+      recommendedBefore: false,
     },
   ];
 
-  const filteredSongs = recommendedSongs.filter(
-    (song) =>
-      (genreFilter === "" || song.genre === genreFilter) &&
-      song.bpm >= bpmRangeFilter[0] &&
-      song.bpm <= bpmRangeFilter[1]
-  );
+  const filteredSongs = recommendedSongs
+    .filter(
+      (song) =>
+        (genreFilter === "" || song.genre === genreFilter) &&
+        song.bpm >= bpmRangeFilter[0] &&
+        song.bpm <= bpmRangeFilter[1] &&
+        (isRerecommendAllowed || !song.recommendedBefore)
+    )
+    .sort((a, b) => {
+      const familiarityDifferenceA = Math.abs(
+        a.familiarityWithArtist - familiarityFilter
+      );
+      const familiarityDifferenceB = Math.abs(
+        b.familiarityWithArtist - familiarityFilter
+      );
+
+      return familiarityDifferenceB - familiarityDifferenceA;
+    });
 
   return (
     <div className="Dashboard">
@@ -90,6 +116,10 @@ function Dashboard() {
         setBpmRangeInput={setBpmRangeInput}
         setBpmRangeFilter={setBpmRangeFilter}
         setSelectedSong={setSelectedSong}
+        familiarityFilter={familiarityFilter}
+        setFamiliarityFilter={setFamiliarityFilter}
+        isRerecommendAllowed={isRerecommendAllowed}
+        setIsRerecommendAllowed={setIsRerecommendAllowed}
       />
       <SelectedSong selectedSong={selectedSong} />
       <Recommendations

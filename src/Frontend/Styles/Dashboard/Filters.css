@@ -23,6 +23,10 @@
   font-size: 15px;
 }
 
+.GenreFilter {
+  margin-bottom: 30px;
+}
+
 .GenreFilter h3 {
   font-size: 16px;
 }
@@ -77,16 +81,22 @@ select {
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important;
 }
 
+.BpmFilter {
+  margin-bottom: 30px;
+}
+
 .BpmFilter h3 {
   font-size: 16px;
+  padding-bottom: 5px;
+  margin: 0px;
 }
 
 .BpmSlider {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
   min-width: 150px;
+  margin-bottom: 30px;
 }
 
 .BpmDisplay {
@@ -106,8 +116,14 @@ select {
   cursor: default;
 }
 
+.ArtistFamiliarityFilter {
+  margin-bottom: 30px;
+}
+
 .ArtistFamiliarityFilter h3 {
   font-size: 16px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .ArtistFamiliaritySlider {
@@ -131,6 +147,7 @@ select {
 
 .AllowRerecommendedFilter {
   display: flex;
+  margin-bottom: 30px;
 }
 
 .AllowRerecommendedCheckbox {

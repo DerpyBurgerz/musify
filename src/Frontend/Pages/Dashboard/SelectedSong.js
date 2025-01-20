@@ -12,6 +12,10 @@ function SelectedSong({ selectedSong }) {
             <p>{selectedSong.duration}</p>
             <p>Genre: {selectedSong.genre}</p>
             <p>BPM: {selectedSong.bpm}</p>
+            <p>
+              Your familiarity with {selectedSong.songArtist}:{" "}
+              {selectedSong.familiarityWithArtist * 100}%
+            </p>
           </div>
           <div className="SelectedSongCover">
             <img
