@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
 import Login from "./Pages/Login";
-import Dashboard from "./Pages/Dashboard";
+import Dashboard from "./Pages/Dashboard/Dashboard";
 import Redirect from "./Pages/Redirect";
+
+import "./Styles/App.css";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

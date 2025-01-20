@@ -1,0 +1,145 @@
+.Filters {
+  flex: 1;
+  flex-basis: 20%;
+  border: 1px solid #ccc;
+  background-color: #9198a4;
+  padding: 1rem;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+.Filters h2 {
+  margin-bottom: 1rem;
+}
+
+.Filters p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.Filters label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 15px;
+}
+
+.GenreFilter h3 {
+  font-size: 16px;
+}
+
+select {
+  font-family: Arial;
+  font-size: 14px;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  width: 100%;
+  cursor: pointer;
+}
+
+.rc-slider {
+  height: 6px;
+  min-width: 75px;
+}
+
+.rc-slider-rail {
+  background-color: #e0e0e0 !important;
+  height: 6px !important;
+  border-radius: 3px !important;
+}
+
+.rc-slider-track {
+  background-color: #007bff !important;
+  height: 6px !important;
+  border-radius: 3px !important;
+}
+
+.rc-slider-handle {
+  width: 16px !important;
+  height: 16px !important;
+  background-color: #ffffff !important;
+  border: 2px solid #007bff !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease !important;
+}
+
+.rc-slider-handle:hover {
+  border-color: #0056b3 !important;
+}
+
+.rc-slider-handle:focus {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important;
+}
+
+.rc-slider-handle:active {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important;
+}
+
+.BpmFilter h3 {
+  font-size: 16px;
+}
+
+.BpmSlider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  min-width: 150px;
+}
+
+.BpmDisplay {
+  width: 50px;
+  padding: 3px;
+  text-align: center;
+  font-size: 12px;
+  font-family: Arial;
+  font-weight: 400;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16px;
+  cursor: default;
+}
+
+.ArtistFamiliarityFilter h3 {
+  font-size: 16px;
+}
+
+.ArtistFamiliaritySlider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ArtistFamiliaritySlider .rc-slider {
+  width: 150px;
+  margin: 0 10px;
+}
+
+.ArtistFamiliaritySlider .rc-slider-track {
+  background-color: #007bff !important;
+}
+
+.ArtistFamiliaritySlider .rc-slider-rail {
+  background-color: #007bff !important;
+}
+
+.AllowRerecommendedFilter {
+  display: flex;
+}
+
+.AllowRerecommendedCheckbox {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+.AllowRerecommendedFilter h3 {
+  margin: 0;
+  font-size: 16px;
+}

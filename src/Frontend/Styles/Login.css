@@ -1,0 +1,27 @@
+.Login {
+  text-align: center;
+  line-height: 10px;
+}
+
+.spotify-button {
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background-color: var(--spotifyGreen);
+  border: none;
+  color: black;
+  padding: 1% 5%;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.spotify-button:hover {
+  background-color: #53ff8f;
+}
+
+.spotify-button:active,
+.spotify-button:focus,
+.spotify-button:disabled {
+  background-color: #21d861;
+}

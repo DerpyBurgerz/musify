@@ -1,6 +1,7 @@
 import React from "react";
 import SpotifyHelper from "../Helpers/SpotifyHelper";
-import "../Styles/App.css";
+
+import "../Styles/Login.css";
 
 const Login = () => {
   const loginRedirect = () => {
