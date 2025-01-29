@@ -2,7 +2,6 @@
   flex: 1;
   flex-basis: 30%;
   cursor: pointer;
-  background-color: #dad6d6;
   padding: 1rem;
   box-sizing: border-box;
   min-height: 100%;
@@ -30,10 +29,11 @@
   height: 90px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  user-select: none;
 }
 
 .Recommendations .SongCard.Selected {
-  border: 2px solid rgba(144, 126, 238, 0.319);
+  border: 3px solid rgba(144, 126, 238, 0.5);
 }
 
 .SongDetails {

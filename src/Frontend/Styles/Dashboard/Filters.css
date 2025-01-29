@@ -1,8 +1,6 @@
 .Filters {
   flex: 1;
   flex-basis: 20%;
-  border: 1px solid #ccc;
-  background-color: #9198a4;
   padding: 1rem;
   box-sizing: border-box;
   min-height: 100%;

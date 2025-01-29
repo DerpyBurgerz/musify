@@ -7,20 +7,32 @@ function SelectedSong({ selectedSong }) {
       {selectedSong ? (
         <div className="SelectedSongContainer">
           <div className="SelectedSongDetails">
-            <p>{selectedSong.songName}</p>
-            <p>Artist: {selectedSong.songArtist}</p>
-            <p>{selectedSong.duration}</p>
-            <p>Genre: {selectedSong.genre}</p>
-            <p>BPM: {selectedSong.bpm}</p>
             <p>
-              Your familiarity with {selectedSong.songArtist}:{" "}
-              {selectedSong.familiarityWithArtist * 100}%
+              <span className="label">Name:</span> {selectedSong.title}
+            </p>
+            <p>
+              <span className="label">Artist:</span> {selectedSong.artist}
+            </p>
+            <p>
+              <span className="label">Duration:</span> {selectedSong.duration}
+            </p>
+            <p>
+              <span className="label">Genre:</span> {selectedSong.genre}
+            </p>
+            <p>
+              <span className="label">BPM:</span> {selectedSong.bpm}
+            </p>
+            <p>
+              <span className="label">
+                Your familiarity with {selectedSong.artist}:
+              </span>{" "}
+              {Math.round(selectedSong.familiarityWithArtist * 100)}%
             </p>
           </div>
           <div className="SelectedSongCover">
             <img
-              src={selectedSong.coverImage}
-              alt={`${selectedSong.songName} cover`}
+              src={selectedSong.albumCover}
+              alt={`${selectedSong.title} cover`}
               className="SelectedCoverImage"
             />
           </div>

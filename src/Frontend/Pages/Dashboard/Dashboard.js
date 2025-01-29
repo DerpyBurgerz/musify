@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../Styles/Dashboard/Dashboard.css";
 import "../../Styles/Dashboard/Filters.css";
 import "../../Styles/Dashboard/SelectedSong.css";
@@ -8,15 +8,11 @@ import Filters from "./Filters";
 import SelectedSong from "./SelectedSong";
 import Recommendations from "./Recommendations";
 
-import cover1 from "../../Images/song1.jpg";
-import cover2 from "../../Images/song2.jpg";
-import cover3 from "../../Images/song3.jpg";
-import cover4 from "../../Images/song4.jpg";
-import cover5 from "../../Images/song5.jpg";
-import cover6 from "../../Images/song6.jpg";
+import SpotifyHelper from "../../Helpers/SpotifyHelper";
 
 function Dashboard() {
   const [selectedSong, setSelectedSong] = useState(null);
+  const [songList, setSongList] = useState([]);
 
   // Filters
   const [genreFilter, setGenreFilter] = useState("");
@@ -25,70 +21,36 @@ function Dashboard() {
   const [familiarityFilter, setFamiliarityFilter] = useState(0.5);
   const [isRerecommendAllowed, setIsRerecommendAllowed] = useState(true);
 
-  const recommendedSongs = [
-    {
-      songName: "Song 1",
-      songArtist: "Artist A, Artist B",
-      duration: "01:23",
-      coverImage: cover1,
-      genre: "EDM",
-      bpm: 128,
-      familiarityWithArtist: 0.95,
-      recommendedBefore: true,
-    },
-    {
-      songName: "Song 2",
-      songArtist: "Artist C",
-      duration: "03:45",
-      coverImage: cover2,
-      genre: "Pop",
-      bpm: 100,
-      familiarityWithArtist: 0.62,
-      recommendedBefore: false,
-    },
-    {
-      songName: "Song 3",
-      songArtist: "Artist D & Artist E",
-      duration: "02:50",
-      coverImage: cover3,
-      genre: "EDM",
-      bpm: 150,
-      familiarityWithArtist: 0.2,
-      recommendedBefore: false,
-    },
-    {
-      songName: "Song 4",
-      songArtist: "Artist F",
-      duration: "04:15",
-      coverImage: cover4,
-      genre: "Rap",
-      bpm: 120,
-      familiarityWithArtist: 0.8,
-      recommendedBefore: true,
-    },
-    {
-      songName: "Song 5",
-      songArtist: "Artist G",
-      duration: "03:30",
-      coverImage: cover5,
-      genre: "Pop",
-      bpm: 130,
-      familiarityWithArtist: 0,
-      recommendedBefore: false,
-    },
-    {
-      songName: "A very long song name",
-      songArtist: "A very long artist name",
-      duration: "02:40",
-      coverImage: cover6,
-      genre: "Rap",
-      bpm: 400,
-      familiarityWithArtist: 0.9,
-      recommendedBefore: false,
-    },
-  ];
+  const fetchRecentlyPlayed = async () => {
+    const accessToken = sessionStorage.getItem("access_token");
 
-  const filteredSongs = recommendedSongs
+    if (accessToken) {
+      const songs = await SpotifyHelper.getRecentlyPlayed(accessToken);
+      console.log("Recently played songs:", songs);
+
+      const formattedSongs = songs.map((song) => ({
+        title: song.trackName,
+        artist: song.artistName,
+        bpm: Math.floor(Math.random() * (250 - 60 + 1)) + 60,
+        genre: ["Pop", "Rap", "EDM"][Math.floor(Math.random() * 3)],
+        familiarityWithArtist: Math.random(),
+        recommendedBefore: false,
+        albumCover: song.albumImage,
+      }));
+      console.log("Formatted songs:", formattedSongs);
+      setSongList(formattedSongs);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecentlyPlayed();
+  }, []);
+
+  useEffect(() => {
+    console.log("Updated song list:", songList);
+  }, [songList]);
+
+  const filteredSongs = songList
     .filter(
       (song) =>
         (genreFilter === "" || song.genre === genreFilter) &&

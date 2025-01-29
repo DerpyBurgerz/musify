@@ -1,0 +1,98 @@
+.header {
+  border-bottom: 1px #cbcbcb;
+  color: black;
+  font-size: 0.5rem;
+  padding-left: 15px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header ul {
+  padding-right: 15px;
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  font-size: 1rem;
+}
+
+.header a {
+  color: black;
+  text-decoration: none;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+.ProfileContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.ProfilePicture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.DropdownMenu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 10;
+  min-width: 200px;
+}
+
+.DropdownMenu button {
+  all: unset;
+  color: black;
+  cursor: pointer;
+  padding: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+.DropdownMenu button:hover {
+  text-decoration: underline;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.ProfileSkeleton {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  animation: skeleton-loading 1s infinite ease-in-out;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c7c7c7;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+.ProfilePicture.hidden {
+  display: none;
+}
+
+.ProfilePicture.visible {
+  display: block;
+}

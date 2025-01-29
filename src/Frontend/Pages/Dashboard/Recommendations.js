@@ -1,6 +1,12 @@
 import React from "react";
 
 function Recommendations({ songs, selectedSong, setSelectedSong }) {
+  const handlePlayButtonPress = (song) => {
+    if (song.youtubeLink) {
+      window.open(song.youtubeLink, "_blank");
+    }
+  };
+
   return (
     <div className="Recommendations">
       <h2>Recommendations for you.</h2>
@@ -9,23 +15,27 @@ function Recommendations({ songs, selectedSong, setSelectedSong }) {
           <div
             key={index}
             className={`SongCard ${
-              selectedSong?.songName === song.songName ? "Selected" : ""
+              selectedSong?.title === song.title ? "Selected" : ""
             }`}
             onClick={() =>
-              setSelectedSong(
-                selectedSong?.songName === song.songName ? null : song
-              )
+              setSelectedSong(selectedSong?.title === song.title ? null : song)
             }
           >
             <div className="SongDetails">
-              <h3 className="SongName">{song.songName}</h3>
-              <p className="SongArtist">{song.songArtist}</p>
+              <h3 className="SongName">{song.title}</h3>
+              <p className="SongArtist">{song.artist}</p>
             </div>
             <div className="CoverSection">
               <p className="Duration">{song.duration}</p>
               <div className="CoverImage">
-                <img src={song.coverImage} alt={`${song.songName} cover`} />
-                <span class="PlayButton material-symbols-outlined">
+                <img src={song.albumCover} alt={`${song.title} cover`} />
+                <span
+                  class="PlayButton material-symbols-outlined"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePlayButtonPress(song);
+                  }}
+                >
                   play_arrow
                 </span>
               </div>
