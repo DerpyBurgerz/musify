@@ -11,16 +11,22 @@
     flex-direction: column;
   }
 
+  h2 {
+    font-size: 1.25rem;
+  }
+
   .Filters {
     flex-basis: 20%;
     height: auto;
     max-height: 400px;
     padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
   }
 
   .SelectedSong {
     flex-basis: 30%;
     min-height: 420px;
+    border-bottom: 1px solid #ccc;
   }
 
   .Recommendations {

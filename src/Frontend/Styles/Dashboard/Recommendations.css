@@ -104,3 +104,43 @@
   margin-bottom: 0px;
   text-align: center;
 }
+
+@media (max-width: 1000px) {
+  .SongName {
+    font-size: 0.9rem;
+  }
+
+  .SongArtist {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .SongName {
+    font-size: 1rem;
+  }
+
+  .SongArtist {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .SongName {
+    font-size: 0.75rem;
+  }
+
+  .SongArtist {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .SongName {
+    font-size: 0.75rem;
+  }
+
+  .SongArtist {
+    font-size: 0.6rem;
+  }
+}

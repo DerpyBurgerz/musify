@@ -30,7 +30,7 @@ function Dashboard() {
       const accessToken = sessionStorage.getItem("access_token");
 
       if (accessToken) {
-        const songs = await SpotifyHelper.getRecentlyPlayed(accessToken);
+        const songs = await SpotifyHelper.getRecentlyPlayed(accessToken, 50);
 
         const formattedSongs = songs.map((song) => ({
           id: song.id,
