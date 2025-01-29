@@ -2,8 +2,8 @@ import React from "react";
 
 function Recommendations({ songs, selectedSong, setSelectedSong }) {
   const handlePlayButtonPress = (song) => {
-    if (song.youtubeLink) {
-      window.open(song.youtubeLink, "_blank");
+    if (song.link) {
+      window.open(song.link, "_blank");
     }
   };
 
@@ -15,10 +15,10 @@ function Recommendations({ songs, selectedSong, setSelectedSong }) {
           <div
             key={index}
             className={`SongCard ${
-              selectedSong?.title === song.title ? "Selected" : ""
+              selectedSong?.id === song.id ? "Selected" : ""
             }`}
             onClick={() =>
-              setSelectedSong(selectedSong?.title === song.title ? null : song)
+              setSelectedSong(selectedSong?.id === song.id ? null : song)
             }
           >
             <div className="SongDetails">
@@ -30,7 +30,7 @@ function Recommendations({ songs, selectedSong, setSelectedSong }) {
               <div className="CoverImage">
                 <img src={song.albumCover} alt={`${song.title} cover`} />
                 <span
-                  class="PlayButton material-symbols-outlined"
+                  className="PlayButton material-symbols-outlined"
                   onClick={(e) => {
                     e.stopPropagation();
                     handlePlayButtonPress(song);

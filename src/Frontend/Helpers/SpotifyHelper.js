@@ -42,16 +42,9 @@ class SpotifyHelper {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(
-          `Token request failed: ${response.status} ${response.statusText}`
-        );
-      }
-
       const data = await response.json();
       return data.access_token;
     } catch (error) {
-      console.error("Error fetching Spotify token:", error);
       return null;
     }
   };
@@ -99,16 +92,28 @@ class SpotifyHelper {
 
       const data = await response.json();
       return data.items.map((item) => ({
+        id: item.track.id,
         trackName: item.track.name,
         artistName: item.track.artists.map((artist) => artist.name).join(", "),
         albumImage: item.track.album.images[0]?.url || "",
-        playedAt: item.played_at,
-        duration: item.track.duration,
+        duration: this.convertDuration(item.track.duration_ms),
+        link: item.track.external_urls.spotify,
+        popularity: item.track.popularity,
       }));
     } catch (error) {
       console.error("Error fetching recently played tracks:", error);
       return [];
     }
   };
+
+  static convertDuration(ms) {
+    const seconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+      .toString()
+      .padStart(2, "0")}`;
+  }
 }
 export default SpotifyHelper;

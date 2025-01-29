@@ -28,6 +28,10 @@ function SelectedSong({ selectedSong }) {
               </span>{" "}
               {Math.round(selectedSong.familiarityWithArtist * 100)}%
             </p>
+            <p>
+              <span className="label">Popularity:</span>{" "}
+              {selectedSong.popularity}%
+            </p>
           </div>
           <div className="SelectedSongCover">
             <img

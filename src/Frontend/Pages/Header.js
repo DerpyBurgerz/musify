@@ -18,16 +18,17 @@ function Header({ isLoggedIn, profilePicture, onLogout }) {
             {isLoggedIn ? (
               <>
                 {!imageLoaded && <div className="ProfileSkeleton"></div>}{" "}
-                {/* Skeleton Loader */}
-                <img
-                  src={profilePicture}
-                  className={`ProfilePicture ${
-                    imageLoaded ? "visible" : "hidden"
-                  }`}
-                  onLoad={() => setImageLoaded(true)}
-                  onClick={() => setShowDropdown((value) => !value)}
-                  alt="Profile"
-                />
+                {profilePicture && (
+                  <img
+                    src={profilePicture}
+                    className={`ProfilePicture ${
+                      imageLoaded ? "visible" : "hidden"
+                    }`}
+                    onLoad={() => setImageLoaded(true)}
+                    onClick={() => setShowDropdown((value) => !value)}
+                    alt="Profile"
+                  />
+                )}
                 {showDropdown && (
                   <div className="DropdownMenu">
                     <button onClick={onLogout}>Log out</button>
