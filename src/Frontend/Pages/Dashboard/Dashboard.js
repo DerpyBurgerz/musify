@@ -84,13 +84,13 @@ function Dashboard() {
     )
     .sort((a, b) => {
       const familiarityDifferenceA = Math.abs(
-        a.familiarityWithArtist - familiarityFilter
+        a.familiarityWithArtist - (1 - familiarityFilter)
       );
       const familiarityDifferenceB = Math.abs(
-        b.familiarityWithArtist - familiarityFilter
+        b.familiarityWithArtist - (1 - familiarityFilter)
       );
 
-      return familiarityDifferenceB - familiarityDifferenceA;
+      return familiarityDifferenceA - familiarityDifferenceB;
     });
 
   return (
