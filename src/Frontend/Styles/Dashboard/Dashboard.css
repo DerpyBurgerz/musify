@@ -1,14 +1,15 @@
 .Dashboard {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  max-height: 100vh;
   font-family: "Montserrat";
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 @media (max-width: 800px) {
   .Dashboard {
     flex-direction: column;
+    max-height: fit-content;
   }
 
   h2 {

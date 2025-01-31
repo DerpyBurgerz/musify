@@ -4,7 +4,9 @@
   cursor: pointer;
   padding: 1rem;
   box-sizing: border-box;
-  min-height: 100%;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .Recommendations h2 {
@@ -103,6 +105,49 @@
   margin-top: auto;
   margin-bottom: 0px;
   text-align: center;
+}
+
+.recommended-songlist-container {
+  height: 70vh;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.create-playlist-button {
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background-color: var(--spotifyGreen);
+  border: none;
+  color: black;
+  padding: 1% 5%;
+  margin-top: 15px;
+  border-radius: 100px;
+  cursor: pointer;
+  min-width: 50%;
+  max-width: 100px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-playlist-button:hover {
+  background-color: #53ff8f;
+}
+
+.create-playlist-button:active,
+.create-playlist-button:focus,
+.create-playlist-button:disabled {
+  background-color: #21d861;
 }
 
 @media (max-width: 1000px) {

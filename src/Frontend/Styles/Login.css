@@ -12,6 +12,7 @@
   border: none;
   color: black;
   padding: 1% 5%;
+  margin-top: 15px;
   border-radius: 100px;
   cursor: pointer;
 }

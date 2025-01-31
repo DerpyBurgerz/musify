@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../Styles/Header.css";
 
+import GitHubLogo from "../Images/githublogo.png";
+
 function Header({ isLoggedIn, profilePicture, onLogout }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -15,6 +17,13 @@ function Header({ isLoggedIn, profilePicture, onLogout }) {
       <nav>
         <ul>
           <li className="ProfileContainer">
+            <a
+              href="https://github.com/DerpyBurgerz/musify"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={GitHubLogo} alt="GitHub" className="GitHubLogo" />
+            </a>
             {isLoggedIn ? (
               <>
                 {!imageLoaded && <div className="ProfileSkeleton"></div>}{" "}

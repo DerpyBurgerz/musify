@@ -13,4 +13,4 @@ app.add_middleware(
 # New endpoint for React frontend
 @app.get("/message")
 def get_message():
-    return {"message": "the place to discover new music with customisability."}
+    return {"message": "test"}
