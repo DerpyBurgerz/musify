@@ -107,12 +107,17 @@ function Dashboard() {
         isRerecommendAllowed={isRerecommendAllowed}
         setIsRerecommendAllowed={setIsRerecommendAllowed}
       />
-      <SelectedSong selectedSong={selectedSong} />
       <Recommendations
         songs={filteredSongs}
         selectedSong={selectedSong}
         setSelectedSong={setSelectedSong}
       />
+      {selectedSong && (
+        <SelectedSong
+          selectedSong={selectedSong}
+          onClose={() => setSelectedSong(null)}
+        />
+      )}
     </div>
   );
 }

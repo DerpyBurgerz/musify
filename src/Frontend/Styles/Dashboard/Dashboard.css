@@ -1,13 +1,38 @@
 .Dashboard {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto 1fr;
   max-height: 100vh;
   font-family: "Montserrat";
   overflow-y: hidden;
+  justify-content: center;
 }
 
+.Filters {
+  max-width: 400px;
+  padding: 1rem;
+  box-sizing: border-box;
+  max-height: 100vh;
+  transition: all 0.3s ease-in-out;
+}
+
+.Recommendations {
+  cursor: pointer;
+  padding: 1rem;
+  box-sizing: border-box;
+  max-height: 100vh;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+}
+@media (min-width: 1500px) {
+  .Recommendations {
+    position: fixed;
+  }
+}
 @media (max-width: 800px) {
   .Dashboard {
+    display: flex;
     flex-direction: column;
     max-height: fit-content;
   }
