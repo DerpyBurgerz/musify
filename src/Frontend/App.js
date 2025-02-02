@@ -23,6 +23,7 @@ function App() {
         if (accessToken) {
           sessionStorage.setItem("access_token", accessToken);
           const profilePic = await SpotifyHelper.getSpotifyProfile(accessToken);
+          console.log(profilePic)
           setProfilePicture(profilePic);
           console.log("Successfully got profile picture");
         }

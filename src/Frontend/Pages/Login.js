@@ -4,10 +4,8 @@ import SpotifyHelper from "../Helpers/SpotifyHelper";
 import "../Styles/Login.css";
 
 const Login = () => {
-  const loginRedirect = () => {
-    window.location = SpotifyHelper.getOAuthCodeUrl(
-      process.env.REACT_APP_REDIRECT_URI
-    );
+  const loginRedirect = async () => {
+    window.location = await SpotifyHelper.getOAuthCodeUrl();
   };
 
   return (

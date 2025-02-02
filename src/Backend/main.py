@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import SpotifyHelper
 
 app = FastAPI()
 app.add_middleware(
@@ -14,3 +15,7 @@ app.add_middleware(
 @app.get("/message")
 def get_message():
     return {"message": "test"}
+
+@app.get("/spotify/code")
+def get_oauth_code():
+    return {"url": SpotifyHelper.getOAuthCodeUrl()}

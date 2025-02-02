@@ -1,27 +1,15 @@
 class SpotifyHelper {
-  static generateRandomString(length) {
-    let text = "";
-    const possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < length; i += 1) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  static getOAuthCodeUrl = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/spotify/code`);
+      const data = await response.json();
+      console.log(data.url);
+      return data.url;
+    } catch (error) {
+      console.error("Error while fetching", error);
+      return null;
     }
-    return text;
-  }
-
-  static getOAuthCodeUrl(redirectUri) {
-    const scope = "user-read-recently-played";
-
-    let url = "https://accounts.spotify.com/authorize";
-    url += "?response_type=code";
-    url += `&client_id=${encodeURIComponent(process.env.REACT_APP_CLIENT_ID)}`;
-    url += `&scope=${encodeURIComponent(scope)}`;
-    url += `&state=${encodeURIComponent(this.generateRandomString(16))}`;
-    url += `&redirect_uri=${encodeURIComponent(redirectUri)}`;
-
-    return url;
-  }
+  };
 
   static getSpotifyToken = async (code) => {
     try {
