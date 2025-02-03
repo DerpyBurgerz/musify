@@ -21,7 +21,7 @@ def get_message() -> str:
 
 @app.get("/spotify/code")
 def get_oauth_code() -> str:
-    return {"url": SpotifyHelper.getOAuthCodeUrl()}
+    return SpotifyHelper.getOAuthCodeUrl()
 
 
 @app.get("/filteredSongs/")

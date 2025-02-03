@@ -5,7 +5,9 @@ import "../Styles/Login.css";
 
 const Login = () => {
   const loginRedirect = async () => {
-    window.location = await SpotifyHelper.getOAuthCodeUrl();
+    const oauthcode = await SpotifyHelper.getOAuthCodeUrl();
+    console.log(oauthcode);
+    window.location = oauthcode;
   };
 
   return (

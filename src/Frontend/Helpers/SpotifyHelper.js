@@ -3,8 +3,8 @@ class SpotifyHelper {
     try {
       const response = await fetch(`http://127.0.0.1:8000/spotify/code`);
       const data = await response.json();
-      console.log(data.url);
-      return data.url;
+      console.log(data);
+      return data;
     } catch (error) {
       console.error("Error while fetching", error);
       return null;
