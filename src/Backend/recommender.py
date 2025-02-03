@@ -18,3 +18,18 @@ filtered = csvFile[test()]
 
 print(filtered.iloc[0:2])
 
+from dataclasses import dataclass
+
+# default values
+@dataclass (genreFilter = [], 
+            bpmRange = [0, 999], 
+            ) 
+class filters:
+    genreFilter: list[str]
+    bpmRange: tuple[int, int]
+
+    def getFilteredData(self, data: pandas.DataFrame) -> pandas.DataFrame:
+        return data[
+            data["genre"].isin(self.genreFilter)
+            (data["tempo"] >= self.bpmRange[0]) & (data["tempo"] <= self.bpmRange[1])
+            ]
