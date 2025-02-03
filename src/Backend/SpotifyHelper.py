@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 import urllib.parse
 import requests
+import httpx
+import asyncio
 import base64
 from math import floor
 from fastapi import FastAPI
@@ -30,6 +32,20 @@ def getOAuthCodeUrl():
     url += f"&state={urllib.parse.quote(generateRandomString(16))}"
     url += f"&redirect_uri={urllib.parse.quote(REACT_APP_REDIRECT_URI)}"
     return url
+
+async def getTrackImage(trackid: str, token: str):
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"https://api.spotify.com/v1/tracks/{trackid}", headers=headers )
+        data = response.json()
+        image = data["album"]["images"][0]["url"]
+
+        return image
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
 
 # @app.get("/spotify/token")
 # async def getSpotifyToken(code):
