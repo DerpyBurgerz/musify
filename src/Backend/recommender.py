@@ -49,22 +49,29 @@ pandas.set_option('display.max_columns', None)
 
 # https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 def test_function():
-    column_names = ['track_name', 'energy', 'danceability', 'loudness', 'liveness', 'valence']
+    column_names = ['track_name', 'energy', 'danceability', 'loudness', 'liveness', 'valence', 'speechiness']
     df = pandas.read_csv('high_popularity_spotify_data.csv', usecols=column_names)
     
     similar_songs = df.copy()
+    test_song = df.copy()
     
     # only use tempo and energy for now
     # select only the tempo and energy columns
-    sound_properties = similar_songs.loc[:,['energy', 'danceability', 'loudness', 'liveness', 'valence']]
+    sound_properties = similar_songs.loc[:,['energy', 'danceability', 'loudness', 'liveness', 'valence', 'speechiness']]
 
     print(sound_properties)
-    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588,-5.914 , 0.2, 0.492])
+    
+    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588,-5.914 , 0.2, 0.492, 0.0518])
     similar_songs = similar_songs.sort_values(by=['similarity with song'], ascending=False)
     print(similar_songs.head())
     
+    test_song['similarity with test song'] = cosine_similarity(sound_properties, [0, 0,-0.001 , 0, 0, 0])
+    test_song = test_song.sort_values(by=['similarity with test song'], ascending=False)
+    print(test_song.head())
+    
     #line 555, GODS lol
-    #0.765,145.988,0.588,gaming,-5.914,0.2,0.492,'League of Legends, NewJeans',4,0.0518,73,https://api.spotify.com/v1/tracks/210JJAa9nJOgNa0YNrsT5g,spotify:track:210JJAa9nJOgNa0YNrsT5g,GODS,Top Gaming Tracks,https://api.spotify.com/v1/audio-analysis/210JJAa9nJOgNa0YNrsT5g,210JJAa9nJOgNa0YNrsT5g,GODS,2023-10-04,3.23e-05,0rAaP1OBxVCn2cIUZNjGRs,0,3,220878,0.00685,210JJAa9nJOgNa0YNrsT5g,modern,audio_features,37i9dQZF1DWTyiBJ6yEqeu
+    #energy,tempo,danceability,playlist_genre,loudness,liveness,valence,track_artist,time_signature,speechiness,track_popularity,track_href,uri,track_album_name,playlist_name,analysis_url,track_id,track_name,track_album_release_date,instrumentalness,track_album_id,mode,key,duration_ms,acousticness,id,playlist_subgenre,type,playlist_id
+    #0.765 ,145.988,0.588      ,gaming       ,-5.914,0.2,0.492,'League of Legends, NewJeans',4,0.0518          ,73,https://api.spotify.com/v1/tracks/210JJAa9nJOgNa0YNrsT5g,spotify:track:210JJAa9nJOgNa0YNrsT5g,GODS,Top Gaming Tracks,https://api.spotify.com/v1/audio-analysis/210JJAa9nJOgNa0YNrsT5g,210JJAa9nJOgNa0YNrsT5g,GODS,2023-10-04,3.23e-05,0rAaP1OBxVCn2cIUZNjGRs,0,3,220878,0.00685,210JJAa9nJOgNa0YNrsT5g,modern,audio_features,37i9dQZF1DWTyiBJ6yEqeu
 
 test_function()
 
