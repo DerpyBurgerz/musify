@@ -1,4 +1,5 @@
 import csv
+from tabulate import tabulate
 
 with open(r'high_popularity_spotify_data.csv', mode = 'r') as file:
     csvFile = csv.reader(file)
@@ -49,7 +50,7 @@ pandas.set_option('display.max_columns', None)
 
 # https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 def test_function():
-    column_names = ['track_name', 'energy', 'danceability', 'loudness', 'liveness', 'valence', 'speechiness']
+    column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness']
     df = pandas.read_csv('high_popularity_spotify_data.csv', usecols=column_names)
     
     similar_songs = df.copy()
@@ -57,17 +58,17 @@ def test_function():
     
     # only use tempo and energy for now
     # select only the tempo and energy columns
-    sound_properties = similar_songs.loc[:,['energy', 'danceability', 'loudness', 'liveness', 'valence', 'speechiness']]
+    sound_properties = similar_songs.loc[:,['energy', 'danceability', 'liveness', 'valence', 'speechiness']]
 
-    print(sound_properties)
+    #print(sound_properties)
     
-    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588,-5.914 , 0.2, 0.492, 0.0518])
+    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588, 0.2, 0.492, 0.0518])
     similar_songs = similar_songs.sort_values(by=['similarity with song'], ascending=False)
-    print(similar_songs.head())
+    print(tabulate(similar_songs.head()))
     
-    test_song['similarity with test song'] = cosine_similarity(sound_properties, [0, 0,-0.001 , 0, 0, 0])
+    test_song['similarity with test song'] = cosine_similarity(sound_properties, [0.5, 0.5, 0.5, 0.5, 0.5])
     test_song = test_song.sort_values(by=['similarity with test song'], ascending=False)
-    print(test_song.head())
+    print(tabulate(test_song.head()))
     
     #line 555, GODS lol
     #energy,tempo,danceability,playlist_genre,loudness,liveness,valence,track_artist,time_signature,speechiness,track_popularity,track_href,uri,track_album_name,playlist_name,analysis_url,track_id,track_name,track_album_release_date,instrumentalness,track_album_id,mode,key,duration_ms,acousticness,id,playlist_subgenre,type,playlist_id
