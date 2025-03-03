@@ -45,6 +45,10 @@ def cosine_similarity(a: [float], b: [float]) -> float:
     cos_similarity = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
     return cos_similarity
 
+def cosine_similarity_list(a: [float], b: [[float]]) -> float:
+    return sum([cosine_similarity(a, x) for x in b])/len(b)
+        
+
 
 pandas.set_option('display.max_columns', None)
 
@@ -66,11 +70,12 @@ def test_function():
     similar_songs = similar_songs.sort_values(by=['similarity with song'], ascending=False)
     print(tabulate(similar_songs.head()))
     
-    test_song['similarity with test song'] = cosine_similarity(sound_properties, [0.5, 0.5, 0.5, 0.5, 0.5])
+    test_song['similarity with test song'] = cosine_similarity_list(sound_properties, [[0.5, 0.5, 0.5, 0.5, 0.5],[0.765, 0.588, 0.2, 0.492, 0.0518],[0.765, 0.588, 0.2, 0.492, 0.0518]])
     test_song = test_song.sort_values(by=['similarity with test song'], ascending=False)
     print(tabulate(test_song.head()))
     
-    #line 555, GODS lol
+    
+    
     #energy,tempo,danceability,playlist_genre,loudness,liveness,valence,track_artist,time_signature,speechiness,track_popularity,track_href,uri,track_album_name,playlist_name,analysis_url,track_id,track_name,track_album_release_date,instrumentalness,track_album_id,mode,key,duration_ms,acousticness,id,playlist_subgenre,type,playlist_id
     #0.765 ,145.988,0.588      ,gaming       ,-5.914,0.2,0.492,'League of Legends, NewJeans',4,0.0518          ,73,https://api.spotify.com/v1/tracks/210JJAa9nJOgNa0YNrsT5g,spotify:track:210JJAa9nJOgNa0YNrsT5g,GODS,Top Gaming Tracks,https://api.spotify.com/v1/audio-analysis/210JJAa9nJOgNa0YNrsT5g,210JJAa9nJOgNa0YNrsT5g,GODS,2023-10-04,3.23e-05,0rAaP1OBxVCn2cIUZNjGRs,0,3,220878,0.00685,210JJAa9nJOgNa0YNrsT5g,modern,audio_features,37i9dQZF1DWTyiBJ6yEqeu
 
