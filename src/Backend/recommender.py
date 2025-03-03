@@ -70,11 +70,11 @@ def test_function():
 
     #print(sound_properties)
     
-    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588, 0.2, 0.492, 0.0518, 130])
+    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588, 0.2, 0.492, 0.0518, 130/200])
     similar_songs = similar_songs.sort_values(by=['similarity with song'], ascending=False)
     print(tabulate(similar_songs.head()))
     
-    test_song['similarity with test song'] = cosine_similarity_list(sound_properties, [[0.5, 0.5, 0.5, 0.5, 0.5, 130],[0.765, 0.588, 0.2, 0.492, 0.0518, 130],[0.765, 0.588, 0.2, 0.492, 0.0518, 130]])
+    test_song['similarity with test song'] = cosine_similarity_list(sound_properties, [[0.5, 0.5, 0.5, 0.5, 0.5, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200]])
     test_song = test_song.sort_values(by=['similarity with test song'], ascending=False)
     print(tabulate(test_song.head()))
     
