@@ -54,23 +54,27 @@ pandas.set_option('display.max_columns', None)
 
 # https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 def test_function():
-    column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness']
+    column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
     df = pandas.read_csv('high_popularity_spotify_data.csv', usecols=column_names)
+    
+    # We normalize the bpm by dividing every bpm by the highest bpm found in the dataset
+    max_bpm = df['tempo'].max()
+    df['tempo']= df['tempo'].apply(lambda x: x/max_bpm) 
     
     similar_songs = df.copy()
     test_song = df.copy()
     
     # only use tempo and energy for now
     # select only the tempo and energy columns
-    sound_properties = similar_songs.loc[:,['energy', 'danceability', 'liveness', 'valence', 'speechiness']]
+    sound_properties = similar_songs.loc[:,['energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']]
 
     #print(sound_properties)
     
-    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588, 0.2, 0.492, 0.0518])
+    similar_songs['similarity with song'] = cosine_similarity(sound_properties, [0.765, 0.588, 0.2, 0.492, 0.0518, 130])
     similar_songs = similar_songs.sort_values(by=['similarity with song'], ascending=False)
     print(tabulate(similar_songs.head()))
     
-    test_song['similarity with test song'] = cosine_similarity_list(sound_properties, [[0.5, 0.5, 0.5, 0.5, 0.5],[0.765, 0.588, 0.2, 0.492, 0.0518],[0.765, 0.588, 0.2, 0.492, 0.0518]])
+    test_song['similarity with test song'] = cosine_similarity_list(sound_properties, [[0.5, 0.5, 0.5, 0.5, 0.5, 130],[0.765, 0.588, 0.2, 0.492, 0.0518, 130],[0.765, 0.588, 0.2, 0.492, 0.0518, 130]])
     test_song = test_song.sort_values(by=['similarity with test song'], ascending=False)
     print(tabulate(test_song.head()))
     
