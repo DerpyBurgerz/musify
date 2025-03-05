@@ -53,19 +53,32 @@ def get_average_vector(ls: [[]]):
     out = [x/len(ls) for x in out]
     return out
 
-def get_recommendations(df: pandas.DataFrame, songs: [[float]]):
+
+def get_recommendations(songs: [[float]], df: pandas.DataFrame = None) -> pandas.DataFrame:
+    """
+    :param songs: This is a list of songs that the recomendation will be based on
+    :param df: the dataframe containing the songs
+    :return: pandas.DataFrame, recommendations
+    """
+    if df is None:
+        column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
+        df = pandas.read_csv('high_popularity_spotify_data.csv', usecols=column_names)
+        
+        max_bpm = df['tempo'].max()
+        df['tempo'] = df['tempo']/max_bpm
+    songs = get_average_vector(songs)
+    df['similarity with song'] = cosine_similarity(df, songs)
+    return df
 
 
-
-
-# https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
+#https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 def test_function():
     column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
     df = pandas.read_csv('high_popularity_spotify_data.csv', usecols=column_names)
     
     # We normalize the bpm by dividing every bpm by the highest bpm found in the dataset
     max_bpm = df['tempo'].max()
-    df['tempo']= df['tempo'].apply(lambda x: x/max_bpm) 
+    df['tempo'] = df['tempo']/max_bpm
     
     our_songs = [[0.5, 0.5, 0.5, 0.5, 0.5, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200]]
     our_songs = get_average_vector(our_songs)
