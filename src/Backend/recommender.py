@@ -54,7 +54,7 @@ def get_average_vector(ls: [[]]):
     return out
 
 
-def get_recommendations(songs: [[float]], df: pandas.DataFrame = None) -> pandas.DataFrame:
+def get_recommendations_based_on_songs(songs: [[float]], df: pandas.DataFrame = None) -> pandas.DataFrame:
     """
     :param songs: This is a list of songs that the recomendation will be based on
     :param df: the dataframe containing the songs
@@ -67,12 +67,18 @@ def get_recommendations(songs: [[float]], df: pandas.DataFrame = None) -> pandas
         max_bpm = df['tempo'].max()
         df['tempo'] = df['tempo']/max_bpm
     songs = get_average_vector(songs)
-    df['similarity with song'] = cosine_similarity(df, songs)
+    df['similarity'] = cosine_similarity(df.loc[:, df.columns != 'track_name'], songs)
     return df
 
+def get_recommendations_based_on_custom_values(energy: float, danceability: float, liveness: float, speechiness: float, df: pandas.DataFrame = None) -> pandas.DataFrame:
+    return get_recommendations_based_on_songs([energy, danceability, liveness, speechiness], df)
 
 #https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 def test_function():
+    """
+    This function is purely for testing purposes.
+    This should not be called from anywhere else.
+    """
     column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
     df = pandas.read_csv('high_popularity_spotify_data.csv', usecols=column_names)
     
@@ -107,35 +113,5 @@ def test_function():
     #0.765 ,145.988,0.588      ,gaming       ,-5.914,0.2,0.492,'League of Legends, NewJeans',4,0.0518          ,73,https://api.spotify.com/v1/tracks/210JJAa9nJOgNa0YNrsT5g,spotify:track:210JJAa9nJOgNa0YNrsT5g,GODS,Top Gaming Tracks,https://api.spotify.com/v1/audio-analysis/210JJAa9nJOgNa0YNrsT5g,210JJAa9nJOgNa0YNrsT5g,GODS,2023-10-04,3.23e-05,0rAaP1OBxVCn2cIUZNjGRs,0,3,220878,0.00685,210JJAa9nJOgNa0YNrsT5g,modern,audio_features,37i9dQZF1DWTyiBJ6yEqeu
 
 pandas.set_option('display.max_columns', None)
-test_function()
-
-
-# energy,
-# tempo,
-# danceability,
-# playlist_genre,
-# loudness,
-# liveness,
-# valence,
-# track_artist,
-# time_signature,
-# speechiness,
-# track_popularity,
-# track_href,
-# uri,
-# track_album_name,
-# playlist_name,
-# analysis_url,
-# track_id,
-# track_name,
-# track_album_release_date,
-# instrumentalness,
-# track_album_id,
-# mode,
-# key,
-# duration_ms,
-# acousticness,
-# id,
-# playlist_subgenre,
-# type,playlist_id
-
+# test_function()
+print(tabulate(get_recommendations_based_on_songs([[0.5, 0.5, 0.5, 0.5, 0.5, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200]])))
