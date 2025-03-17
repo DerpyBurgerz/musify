@@ -1,12 +1,6 @@
 import csv
 
-# from tabulate import tabulate
-
-# https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
-
-# with open('.\src\Backend\high_popularity_spotify_data.csv', mode = 'r') as file:
-#     csvFile = csv.reader(file)
-#     print(type(csvFile))
+#  https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 
 import pandas
 
@@ -126,5 +120,3 @@ def get_recommendations_based_on_custom_values(
 
 
 pandas.set_option("display.max_columns", None)
-# test_function()
-# print(tabulate(get_recommendations_based_on_songs([[0.5, 0.5, 0.5, 0.5, 0.5, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200],[0.765, 0.588, 0.2, 0.492, 0.0518, 130/200]])))
