@@ -43,4 +43,3 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str):
 @app.get("/randomTrackInfo/")
 async def get_random_track_image(trackid: str, token: str):
     return await SpotifyHelper.getTrackImage(trackid, token)
-

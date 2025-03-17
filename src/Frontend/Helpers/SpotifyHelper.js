@@ -61,10 +61,11 @@ class SpotifyHelper {
     }
   };
 
-  static getRecentlyPlayed = async (accessToken, limit) => {
+  static getTracksInfo = async (accessToken, trackIds) => {
     try {
+      const trackIdString = trackIds.join(',');
       const response = await fetch(
-        `https://api.spotify.com/v1/me/player/recently-played?limit=${limit}`,
+        `https://api.spotify.com/v1/tracks?ids=${trackIdString}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -74,19 +75,19 @@ class SpotifyHelper {
 
       if (!response.ok) {
         throw new Error(
-          `Recently played request failed: ${response.status} ${response.statusText}`
+          `Recommend songs request failed: ${response.status} ${response.statusText}`
         );
       }
 
       const data = await response.json();
-      return data.items.map((item) => ({
-        id: item.track.id,
-        trackName: item.track.name,
-        artistName: item.track.artists.map((artist) => artist.name).join(", "),
-        albumImage: item.track.album.images[0]?.url || "",
-        duration: this.convertDuration(item.track.duration_ms),
-        link: item.track.external_urls.spotify,
-        popularity: item.track.popularity,
+      return data.tracks.map((track) => ({
+        id: track.id,
+        trackName: track.name,
+        artistName: track.artists.map((artist) => artist.name).join(", "),
+        albumImage: track.album.images[0]?.url || "",
+        duration: this.convertDuration(track.duration_ms),
+        link: track.external_urls.spotify,
+        popularity: track.popularity,
       }));
     } catch (error) {
       console.error("Error fetching recently played tracks:", error);
