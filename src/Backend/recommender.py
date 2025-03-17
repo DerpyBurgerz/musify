@@ -3,13 +3,13 @@ from tabulate import tabulate
 
 #https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 
-with open(r'high_popularity_spotify_data.csv', mode = 'r') as file:
+with open('.\src\Backend\high_popularity_spotify_data.csv', mode = 'r') as file:
     csvFile = csv.reader(file)
     print(type(csvFile))
 
 import pandas
 columns = ['tempo', 'energy']
-csvFile = pandas.read_csv('high_popularity_spotify_data.csv', usecols=columns)
+csvFile = pandas.read_csv('.\src\Backend\high_popularity_spotify_data.csv', usecols=columns)
 #print(csvFile)
 
 
@@ -63,7 +63,7 @@ def get_recommendations_based_on_songs(songs: [[float]], df: pandas.DataFrame = 
     """
     if df is None:
         column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
-        df = pandas.read_csv('high_popularity_spotify_data.csv', usecols=column_names)
+        df = pandas.read_csv('.\src\Backend\high_popularity_spotify_data.csv', usecols=column_names)
         
         max_bpm = df['tempo'].max()
         df['tempo'] = df['tempo']/max_bpm
