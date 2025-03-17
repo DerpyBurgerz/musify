@@ -36,15 +36,14 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
     columns = [
         "tempo",
         "energy",
-        "playlist_genre",
+        "genre",
         "track_id",
         "danceability",
         "liveness",
         "valence",
         "speechiness",
         "track_name",
-        "track_artist"
-
+        "artist_name",
     ]
     csvFile = pandas.read_csv(
         "src\Backend\high_popularity_spotify_data.csv", usecols=columns
@@ -56,7 +55,9 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
         [[0.5, 0.5, 0.5, 0.5, 0.5, 130 / 200]], data, 50
     )
 
-    return {"filteredSongs": data[[ "track_id", "playlist_genre", "tempo"]].to_dict(orient="records")}
+    return {
+        "filteredSongs": data[["track_id", "genre", "tempo"]].to_dict(orient="records")
+    }
 
 
 @app.get("/randomTrackInfo/")
