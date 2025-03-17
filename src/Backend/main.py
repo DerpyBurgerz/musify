@@ -23,16 +23,23 @@ def get_message() -> str:
 def get_oauth_code() -> str:
     return SpotifyHelper.getOAuthCodeUrl()
 
-
+from recommender import get_recommendations_based_on_songs
 @app.get("/filteredSongs/")
-def get_filtered_music(bpmlow: int, bpmhigh: int):
-    columns = ["tempo", "energy", "playlist_genre"]
+def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str):
+    genres = genres.split(" ")
+    
+    columns = ["tempo", "energy", "playlist_genre", 'track_id', 'danceability', 'liveness', 'valence', 'speechiness']
     csvFile = pandas.read_csv('src\Backend\high_popularity_spotify_data.csv', usecols=columns)
-    filter = filters(["pop"], (bpmlow, bpmhigh))
+    filter = filters(genres, (bpmlow, bpmhigh))
     data = filter.getFilteredData(csvFile)
-    return {"filteredSongs": data.values.tolist()}
+    data = data.drop('playlist_genre', axis=1)
+    
+    data = get_recommendations_based_on_songs([[0.5, 0.5, 0.5, 0.5, 0.5, 130/200]], data, 10)
+
+
+
+    return {"filteredSongs": data['track_id'].values.tolist()}
 
 @app.get("/randomTrackInfo/")
 async def get_random_track_image(trackid: str, token: str):
     return await SpotifyHelper.getTrackImage(trackid, token)
-
