@@ -30,7 +30,7 @@ class filters:
     bpmRange: tuple[int, int]   
 
     def __post_init__(self):
-        if self.genreFilter is None:
+        if self.genreFilter is None or self.genreFilter == [""]:
             self.genreFilter = []
         if self.bpmRange is None:
             self.bpmRange = [0, 999]

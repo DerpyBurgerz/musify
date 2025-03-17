@@ -25,7 +25,7 @@ def get_oauth_code() -> str:
 
 from recommender import get_recommendations_based_on_songs
 @app.get("/filteredSongs/")
-def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str):
+def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
     genres = genres.split(" ")
     
     columns = ["tempo", "energy", "playlist_genre", 'track_id', 'danceability', 'liveness', 'valence', 'speechiness']
