@@ -63,7 +63,7 @@ class SpotifyHelper {
 
   static getTracksInfo = async (accessToken, trackIds) => {
     try {
-      const trackIdString = trackIds.join(',');
+      const trackIdString = trackIds.join(",");
       const response = await fetch(
         `https://api.spotify.com/v1/tracks?ids=${trackIdString}`,
         {

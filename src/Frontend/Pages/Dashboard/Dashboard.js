@@ -9,7 +9,8 @@ import SelectedSong from "./SelectedSong";
 import Recommendations from "./Recommendations";
 
 import SpotifyHelper from "../../Helpers/SpotifyHelper";
-import FilterHelper from "../../Helpers/FilterHelper"
+import FilterHelper from "../../Helpers/FilterHelper";
+
 function Dashboard() {
   const [selectedSong, setSelectedSong] = useState(null);
   const [songList, setSongList] = useState([]);
@@ -28,15 +29,22 @@ function Dashboard() {
   useEffect(() => {
     const fetchRecommendedSongs = async () => {
       const bpmLow = bpmRangeFilter[0];
-      const bpmHigh= bpmRangeFilter[1];
+      const bpmHigh = bpmRangeFilter[1];
       const genres = genreFilter;
 
-      const recommendedTrackIds = FilterHelper.getFilteredSongs(bpmLow, bpmHigh, genreFilter);
+      const recommendedTrackIds = await FilterHelper.getFilteredSongs(
+        bpmLow,
+        bpmHigh,
+        genres
+      );
 
       const accessToken = sessionStorage.getItem("access_token");
 
       if (accessToken) {
-        const songs = await SpotifyHelper.getTracksInfo(accessToken, recommendedTrackIds);
+        const songs = await SpotifyHelper.getTracksInfo(
+          accessToken,
+          recommendedTrackIds
+        );
 
         const formattedSongs = songs.map((song) => ({
           id: song.id,
