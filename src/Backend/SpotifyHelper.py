@@ -24,7 +24,7 @@ def generateRandomString(length):
     return text
 
 def getOAuthCodeUrl():
-    scope = "user-read-recently-played"
+    scope = "user-top-read"
     url = "https://accounts.spotify.com/authorize"
     url += "?response_type=code"
     url += f"&client_id={urllib.parse.quote(REACT_APP_CLIENT_ID)}"
@@ -45,7 +45,17 @@ async def getTrackImage(trackid: str, token: str):
     except Exception as e:
         print(f"Error: {e}")
         return None
-
+    
+async def getTopTracks(accessToken, limit):
+    try:
+        headers = {"Authorization": f"Bearer {accessToken}"}
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"https://api.spotify.com/v1/me/top/tracks?limit={limit}", headers=headers )
+        data = response.json()
+        return data
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
 
 # @app.get("/spotify/token")
 # async def getSpotifyToken(code):

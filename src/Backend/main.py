@@ -62,3 +62,8 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
 @app.get("/randomTrackInfo/")
 async def get_random_track_image(trackid: str, token: str):
     return await SpotifyHelper.getTrackImage(trackid, token)
+
+
+@app.get("/topTracks/")
+async def get_top_tracks(accessToken: str, limit: int):
+    return await SpotifyHelper.getTopTracks(accessToken, limit)
