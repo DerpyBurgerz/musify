@@ -61,8 +61,9 @@ class SpotifyHelper {
     }
   };
 
-  static getTracksInfo = async (accessToken, trackIds) => {
+  static getTracksInfo = async (accessToken, recommendedTracks) => {
     try {
+      const trackIds = recommendedTracks.map((track) => track.track_id);
       const trackIdString = trackIds.join(",");
       const response = await fetch(
         `https://api.spotify.com/v1/tracks?ids=${trackIdString}`,
@@ -80,7 +81,7 @@ class SpotifyHelper {
       }
 
       const data = await response.json();
-      return data.tracks.map((track) => ({
+      return data.tracks.map((track, index) => ({
         id: track.id,
         trackName: track.name,
         artistName: track.artists.map((artist) => artist.name).join(", "),
@@ -88,6 +89,8 @@ class SpotifyHelper {
         duration: this.convertDuration(track.duration_ms),
         link: track.external_urls.spotify,
         popularity: track.popularity,
+        bpm: Math.round(recommendedTracks[index]["tempo"]),
+        genre: recommendedTracks[index]["playlist_genre"],
       }));
     } catch (error) {
       console.error("Error fetching recently played tracks:", error);

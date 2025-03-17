@@ -57,7 +57,7 @@ function Dashboard() {
     const bpmHigh = bpmRangeFilter[1];
     const genres = genreFilter;
 
-    const recommendedTrackIds = await FilterHelper.getFilteredSongs(
+    const recommendedTracks = await FilterHelper.getFilteredSongs(
       bpmLow,
       bpmHigh,
       genres
@@ -68,15 +68,15 @@ function Dashboard() {
     if (accessToken) {
       const songs = await SpotifyHelper.getTracksInfo(
         accessToken,
-        recommendedTrackIds
+        recommendedTracks
       );
 
       const formattedSongs = songs.map((song) => ({
         id: song.id,
         title: song.trackName,
         artist: song.artistName,
-        bpm: Math.floor(Math.random() * (250 - 60 + 1)) + 60,
-        genre: ["Pop", "Rap", "EDM"][Math.floor(Math.random() * 3)],
+        bpm: song.bpm,
+        genre: song.genre,
         familiarityWithArtist: Math.random(),
         recommendedBefore: false,
         albumCover: song.albumImage,

@@ -56,7 +56,7 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
         [[0.5, 0.5, 0.5, 0.5, 0.5, 130 / 200]], data, 50
     )
 
-    return {"filteredSongs": data["track_id"].values.tolist()}
+    return {"filteredSongs": data[[ "track_id", "playlist_genre", "tempo"]].to_dict(orient="records")}
 
 
 @app.get("/randomTrackInfo/")
