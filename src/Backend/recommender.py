@@ -1,5 +1,5 @@
 import csv
-from tabulate import tabulate
+# from tabulate import tabulate
 
 #https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 
