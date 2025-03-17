@@ -63,17 +63,20 @@ def get_recommendations_based_on_songs(songs: [[float]], df: pandas.DataFrame = 
     :return: pandas.DataFrame, recommendations
     """
     if df is None:
-        column_names = ['track_name', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
+        column_names = ['track_id', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
         df = pandas.read_csv('.\src\Backend\high_popularity_spotify_data.csv', usecols=column_names)
         
         max_bpm = df['tempo'].max()
         df['tempo'] = df['tempo']/max_bpm
     
     songs = get_average_vector(songs)
-    df['similarity'] = cosine_similarity(df.loc[:, df.columns != 'track_name'], songs)
+    df['similarity'] = cosine_similarity(df.loc[:, df.columns != 'track_id'], songs)
 
     df = df.sort_values(by=['similarity'], ascending=False)
-    df = df.head(songCount)
+    
+    # get the first n songs if a songcount is given
+    if songCount != -1:
+        df = df.head(songCount)
 
     return df
 
