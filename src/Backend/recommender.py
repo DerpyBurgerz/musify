@@ -3,20 +3,20 @@ from tabulate import tabulate
 
 #https://georgepaskalev.medium.com/how-to-build-a-content-based-song-recommender-4346edbfa5cf
 
-with open('.\src\Backend\high_popularity_spotify_data.csv', mode = 'r') as file:
-    csvFile = csv.reader(file)
-    print(type(csvFile))
+# with open('.\src\Backend\high_popularity_spotify_data.csv', mode = 'r') as file:
+#     csvFile = csv.reader(file)
+#     print(type(csvFile))
 
 import pandas
-columns = ['tempo', 'energy']
-csvFile = pandas.read_csv('.\src\Backend\high_popularity_spotify_data.csv', usecols=columns)
-#print(csvFile)
+# columns = ['tempo', 'energy']
+# csvFile = pandas.read_csv('.\src\Backend\high_popularity_spotify_data.csv', usecols=columns)
+# #print(csvFile)
 
 
-def test():
-    return (csvFile['tempo'] > 120) & (csvFile['energy'] > 0.7)
+# def test():
+#     return (csvFile['tempo'] > 120) & (csvFile['energy'] > 0.7)
 
-filtered = csvFile[test()]
+# filtered = csvFile[test()]
 
 
 #print(filtered.iloc[0:2])
@@ -27,13 +27,14 @@ from dataclasses import dataclass
 @dataclass
 class filters:
     genreFilter: list[str]
-    bpmRange: tuple[int, int]
+    bpmRange: tuple[int, int]   
 
     def __post_init__(self):
         if self.genreFilter is None:
             self.genreFilter = []
         if self.bpmRange is None:
             self.bpmRange = [0, 999]
+
         
     def getFilteredData(self, data: pandas.DataFrame) -> pandas.DataFrame:
         return data[
@@ -55,7 +56,7 @@ def get_average_vector(ls: [[]]):
     return out
 
 
-def get_recommendations_based_on_songs(songs: [[float]], df: pandas.DataFrame = None) -> pandas.DataFrame:
+def get_recommendations_based_on_songs(songs: [[float]], df: pandas.DataFrame = None, songCount: int = -1) -> pandas.DataFrame:
     """
     :param songs: This is a list of songs that the recomendation will be based on
     :param df: the dataframe containing the songs
@@ -70,10 +71,14 @@ def get_recommendations_based_on_songs(songs: [[float]], df: pandas.DataFrame = 
     
     songs = get_average_vector(songs)
     df['similarity'] = cosine_similarity(df.loc[:, df.columns != 'track_name'], songs)
+
+    df = df.sort_values(by=['similarity'], ascending=False)
+    df = df.head(songCount)
+
     return df
 
 def get_recommendations_based_on_custom_values(energy: float, danceability: float, liveness: float, speechiness: float, df: pandas.DataFrame = None) -> pandas.DataFrame:
-    return get_recommendations_based_on_songs([energy, danceability, liveness, speechiness], df)
+    return get_recommendations_based_on_songs([energy, danceability, liveness, speechiness], df, 10)
 
 
 pandas.set_option('display.max_columns', None)
