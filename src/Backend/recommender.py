@@ -37,8 +37,14 @@ class filters:
 
         
     def getFilteredData(self, data: pandas.DataFrame) -> pandas.DataFrame:
+        
+        if self.genreFilter:
+            return data[
+                data['playlist_genre'].isin(self.genreFilter) &
+                (data['tempo'] >= self.bpmRange[0]) &
+                (data['tempo'] <= self.bpmRange[1])
+                ]
         return data[
-            data['playlist_genre'].isin(self.genreFilter) &
             (data['tempo'] >= self.bpmRange[0]) &
             (data['tempo'] <= self.bpmRange[1])
             ]
