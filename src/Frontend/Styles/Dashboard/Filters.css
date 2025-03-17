@@ -27,6 +27,9 @@
   overflow: hidden;
   transform: scaleY(0);
   transform-origin: top;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .FiltersContent.open {
@@ -43,10 +46,6 @@
   display: block;
   margin-bottom: 1rem;
   font-size: 15px;
-}
-
-.GenreFilter {
-  margin-bottom: 30px;
 }
 
 .GenreFilter h3 {
@@ -104,7 +103,7 @@ select {
 }
 
 .BpmFilter {
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 
 .BpmFilter h3 {
@@ -118,7 +117,6 @@ select {
   align-items: center;
   gap: 10px;
   min-width: 150px;
-  margin-bottom: 30px;
 }
 
 .BpmDisplay {
@@ -136,10 +134,6 @@ select {
   justify-content: center;
   height: 16px;
   cursor: default;
-}
-
-.ArtistFamiliarityFilter {
-  margin-bottom: 30px;
 }
 
 .ArtistFamiliarityFilter h3 {
@@ -169,7 +163,6 @@ select {
 
 .AllowRerecommendedFilter {
   display: flex;
-  margin-bottom: 30px;
 }
 
 .AllowRerecommendedCheckbox {
@@ -181,4 +174,27 @@ select {
 .AllowRerecommendedFilter h3 {
   margin: 0;
   font-size: 16px;
+}
+
+.ApplyFiltersButton {
+  text-align: center;
+  font-family: "Montserrat";
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  background-color: rgb(0, 123, 255);
+  border: none;
+  color: white;
+  padding: 3% 5%;
+  margin-top: 5px;
+  border-radius: 100px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.ApplyFiltersButton:hover {
+  background-color: #0056b3 ;
+}
+
+.ApplyFiltersButton:active {
+  background-color: #033d7a;
 }

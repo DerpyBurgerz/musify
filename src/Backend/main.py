@@ -42,13 +42,15 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
         "liveness",
         "valence",
         "speechiness",
+        "track_name",
+        "track_artist"
+
     ]
     csvFile = pandas.read_csv(
         "src\Backend\high_popularity_spotify_data.csv", usecols=columns
     )
     filter = filters(genres, (bpmlow, bpmhigh))
     data = filter.getFilteredData(csvFile)
-    data = data.drop("playlist_genre", axis=1)
 
     data = get_recommendations_based_on_songs(
         [[0.5, 0.5, 0.5, 0.5, 0.5, 130 / 200]], data, 50

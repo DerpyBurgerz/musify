@@ -6,9 +6,7 @@ class FilterHelper {
         url += `&genres=${genres}`;
       }
       const response = await fetch(url);
-      console.log(response);
       const data = await response.json();
-      console.log(data);
       return data.filteredSongs;
     } catch (error) {
       console.error("error while fetching filtered songs", error);

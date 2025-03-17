@@ -27,47 +27,11 @@ function Dashboard() {
   const [isRerecommendAllowed, setIsRerecommendAllowed] = useState(true);
 
   useEffect(() => {
-    const fetchRecommendedSongs = async () => {
-      const bpmLow = bpmRangeFilter[0];
-      const bpmHigh = bpmRangeFilter[1];
-      const genres = genreFilter;
-
-      const recommendedTrackIds = await FilterHelper.getFilteredSongs(
-        bpmLow,
-        bpmHigh,
-        genres
-      );
-
-      const accessToken = sessionStorage.getItem("access_token");
-
-      if (accessToken) {
-        const songs = await SpotifyHelper.getTracksInfo(
-          accessToken,
-          recommendedTrackIds
-        );
-
-        const formattedSongs = songs.map((song) => ({
-          id: song.id,
-          title: song.trackName,
-          artist: song.artistName,
-          bpm: Math.floor(Math.random() * (250 - 60 + 1)) + 60,
-          genre: ["Pop", "Rap", "EDM"][Math.floor(Math.random() * 3)],
-          familiarityWithArtist: Math.random(),
-          recommendedBefore: false,
-          albumCover: song.albumImage,
-          duration: song.duration,
-          link: song.link,
-          popularity: song.popularity,
-        }));
-        setSongList(formattedSongs);
-      }
-    };
-
     if (!accessToken || songList.length > 0) {
       return;
     }
 
-    fetchRecommendedSongs();
+    updateRecommendedSongs();
   }, [accessToken, songList.length, bpmRangeFilter, genreFilter]);
 
   useEffect(() => {
@@ -88,24 +52,41 @@ function Dashboard() {
     return () => clearInterval(interval);
   }, [accessToken]);
 
-  const filteredSongs = songList
-    .filter(
-      (song) =>
-        (genreFilter === "" || song.genre === genreFilter) &&
-        song.bpm >= bpmRangeFilter[0] &&
-        song.bpm <= bpmRangeFilter[1] &&
-        (isRerecommendAllowed || !song.recommendedBefore)
-    )
-    .sort((a, b) => {
-      const familiarityDifferenceA = Math.abs(
-        a.familiarityWithArtist - (1 - familiarityFilter)
-      );
-      const familiarityDifferenceB = Math.abs(
-        b.familiarityWithArtist - (1 - familiarityFilter)
+  const updateRecommendedSongs = async () => {
+    const bpmLow = bpmRangeFilter[0];
+    const bpmHigh = bpmRangeFilter[1];
+    const genres = genreFilter;
+
+    const recommendedTrackIds = await FilterHelper.getFilteredSongs(
+      bpmLow,
+      bpmHigh,
+      genres
+    );
+
+    const accessToken = sessionStorage.getItem("access_token");
+
+    if (accessToken) {
+      const songs = await SpotifyHelper.getTracksInfo(
+        accessToken,
+        recommendedTrackIds
       );
 
-      return familiarityDifferenceA - familiarityDifferenceB;
-    });
+      const formattedSongs = songs.map((song) => ({
+        id: song.id,
+        title: song.trackName,
+        artist: song.artistName,
+        bpm: Math.floor(Math.random() * (250 - 60 + 1)) + 60,
+        genre: ["Pop", "Rap", "EDM"][Math.floor(Math.random() * 3)],
+        familiarityWithArtist: Math.random(),
+        recommendedBefore: false,
+        albumCover: song.albumImage,
+        duration: song.duration,
+        link: song.link,
+        popularity: song.popularity,
+      }));
+      setSongList(formattedSongs);
+    }
+  };
 
   return (
     <div className="Dashboard">
@@ -120,9 +101,11 @@ function Dashboard() {
         setFamiliarityFilter={setFamiliarityFilter}
         isRerecommendAllowed={isRerecommendAllowed}
         setIsRerecommendAllowed={setIsRerecommendAllowed}
+        updateRecommendedSongs={updateRecommendedSongs}
+        setSongList={setSongList}
       />
       <Recommendations
-        songs={filteredSongs}
+        songs={songList}
         selectedSong={selectedSong}
         setSelectedSong={setSelectedSong}
       />

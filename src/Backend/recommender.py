@@ -50,7 +50,7 @@ class filters:
             ]
 
 import numpy as np
-def cosine_similarity(a: [float], b: [float]) -> float:
+def cosine_similarity(a: list[float], b: list[float]) -> float:
     cos_similarity = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
     return cos_similarity
 
@@ -62,23 +62,23 @@ def get_average_vector(ls: [[]]):
     return out
 
 
-def get_recommendations_based_on_songs(songs: [[float]], df: pandas.DataFrame = None, songCount: int = -1) -> pandas.DataFrame:
+def get_recommendations_based_on_songs(songs: list[list[float]], df: pandas.DataFrame = None, songCount: int = -1) -> pandas.DataFrame:
     """
-    :param songs: This is a list of songs that the recomendation will be based on
+    :param songs: This is a list of songs that the recommendation will be based on
     :param df: the dataframe containing the songs
     :return: pandas.DataFrame, recommendations
     """
     if df is None:
-        column_names = ['track_id', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
+        column_names = ['track_id', 'track_name', 'track_artist', 'playlist_genre', 'energy', 'danceability', 'liveness', 'valence', 'speechiness', 'tempo']
         df = pandas.read_csv('.\src\Backend\high_popularity_spotify_data.csv', usecols=column_names)
         
         max_bpm = df['tempo'].max()
         df['tempo'] = df['tempo']/max_bpm
-    
-    songs = get_average_vector(songs)
-    df['similarity'] = cosine_similarity(df.loc[:, df.columns != 'track_id'], songs)
 
-    df = df.sort_values(by=['similarity'], ascending=False)
+    songs = get_average_vector(songs)
+    df['similarity'] = cosine_similarity(df.loc[:, ~df.columns.isin(['track_id', 'track_name', 'track_artist', 'playlist_genre'])], songs)
+
+    df = df.drop_duplicates(subset=['track_name', 'track_artist']).sort_values(by=['similarity'], ascending=False)
     
     # get the first n songs if a songcount is given
     if songCount != -1:

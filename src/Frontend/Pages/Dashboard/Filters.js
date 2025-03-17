@@ -3,6 +3,8 @@ import Slider from "rc-slider";
 import Checkbox from "rc-checkbox";
 import "rc-slider/assets/index.css";
 
+import FilterHelper from "../../Helpers/FilterHelper";
+
 function Filters({
   genreFilter,
   setGenreFilter,
@@ -14,6 +16,8 @@ function Filters({
   setFamiliarityFilter,
   isRerecommendAllowed,
   setIsRerecommendAllowed,
+  updateRecommendedSongs,
+  setSongList,
 }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -47,9 +51,34 @@ function Filters({
             }}
           >
             <option value="">All</option>
-            <option value="Pop">Pop</option>
-            <option value="Rap">Rap</option>
-            <option value="EDM">EDM</option>
+            <option value="pop">Pop</option>
+            <option value="rock">Rock</option>
+            <option value="jazz">Jazz</option>
+            <option value="classical">Classical</option>
+            <option value="hip-Hop">Hip-Hop</option>
+            <option value="afrobeats">Afrobeats</option>
+            <option value="latin">Latin</option>
+            <option value="indian">Indian</option>
+            <option value="country">Country</option>
+            <option value="r&b">R&B</option>
+            <option value="electronic">Electronic</option>
+            <option value="soul">Soul</option>
+            <option value="gaming">Gaming</option>
+            <option value="j-pop">J-Pop</option>
+            <option value="metal">Metal</option>
+            <option value="reggae">Reggae</option>
+            <option value="k-pop">K-pop</option>
+            <option value="arabic">Arabic</option>
+            <option value="punk">Punk</option>
+            <option value="blues">Blues</option>
+            <option value="folk">Folk</option>
+            <option value="lofi">Lofi</option>
+            <option value="brazilian">Brazilian</option>
+            <option value="turkish ">Turkish</option>
+            <option value="ambient">Ambient</option>
+            <option value="korean">Korean</option>
+            <option value="world">World</option>
+            <option value="indie">Indie</option>
           </select>
         </div>
         <div className="BpmFilter">
@@ -101,6 +130,15 @@ function Filters({
             />
           </div>
         </div>
+        <button
+          className="ApplyFiltersButton"
+          onClick={() => {
+            setSongList([]);
+            updateRecommendedSongs();
+          }}
+        >
+          Apply Filters
+        </button>
       </div>
     </div>
   );
