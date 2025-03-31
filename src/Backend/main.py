@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import SpotifyHelper
-from recommender import filters
+from recommender import filters, get_song_properties
+from database.database import get_user, create_user
 import SpotifyHelper
 import pandas
+
 
 app = FastAPI()
 app.add_middleware(
@@ -30,9 +32,8 @@ from recommender import get_recommendations_based_on_songs
 
 
 @app.get("/filteredSongs/")
-def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
+async def get_filtered_music(id: str, bpmlow: int, bpmhigh: int, accessToken: str, genres: str = ""):
     genres = genres.split(" ")
-
     columns = [
         "tempo",
         "energy",
@@ -50,9 +51,58 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
     )
     filter = filters(genres, (bpmlow, bpmhigh))
     data = filter.getFilteredData(csvFile)
+    
+
+    user_data = get_user(id)
+    if user_data == None:
+        top_tracks = await SpotifyHelper.getTopTracks(accessToken, 20)
+        items = top_tracks["items"]
+        track_ids = [item["id"] for item in items]
+        
+        total_tracks_found = 0
+        average_value = [0, 0, 0, 0, 0, 0]
+
+        for track_id in track_ids:
+            song_properties = get_song_properties(data, track_id)
+            if song_properties.empty: continue
+            
+            total_tracks_found += 1
+            energy = song_properties.iloc[0]['energy']
+            danceability = song_properties.iloc[0]['danceability']
+            liveness = song_properties.iloc[0]['liveness']
+            valence = song_properties.iloc[0]['valence']
+            speechiness = song_properties.iloc[0]['speechiness']
+            tempo = song_properties.iloc[0]['tempo']
+
+            average_value[0] += energy
+            average_value[1] += danceability
+            average_value[2] += liveness
+            average_value[3] += valence
+            average_value[4] += speechiness
+            average_value[5] += tempo 
+        print(id, total_tracks_found)
+        average_value[5] = average_value[5] / 250
+        if total_tracks_found > 0:
+            user_data = [x / total_tracks_found for x in average_value]
+        else:
+            user_data = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+
+        create_user(id, user_data[0], user_data[1], user_data[2], user_data[3], user_data[4], user_data[5])
+    else:
+        user_data = dict(user_data)
+        user_data = [
+            user_data["energy"],
+            user_data["danceability"],
+            user_data["liveness"],
+            user_data["valence"],
+            user_data["speechiness"],
+            user_data["tempo"],
+        ]
+    
+    print(user_data)
 
     data = get_recommendations_based_on_songs(
-        [[0.5, 0.5, 0.5, 0.5, 0.5, 130 / 200]], data, 50
+        [user_data], data, 50
     )
 
     return {

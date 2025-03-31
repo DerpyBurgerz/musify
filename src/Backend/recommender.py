@@ -4,18 +4,6 @@ import csv
 
 import pandas
 
-# columns = ['tempo', 'energy']
-# csvFile = pandas.read_csv('.\src\Backend\spotify_data.csv', usecols=columns)
-# #print(csvFile)
-
-
-# def test():
-#     return (csvFile['tempo'] > 120) & (csvFile['energy'] > 0.7)
-
-# filtered = csvFile[test()]
-
-
-# print(filtered.iloc[0:2])
 
 from dataclasses import dataclass
 
@@ -107,16 +95,19 @@ def get_recommendations_based_on_songs(
     return df
 
 
-def get_recommendations_based_on_custom_values(
-    energy: float,
-    danceability: float,
-    liveness: float,
-    speechiness: float,
-    df: pandas.DataFrame = None,
-) -> pandas.DataFrame:
-    return get_recommendations_based_on_songs(
-        [energy, danceability, liveness, speechiness], df, 10
-    )
+# def get_recommendations_based_on_custom_values(
+#     energy: float,
+#     danceability: float,
+#     liveness: float,
+#     speechiness: float,
+#     df: pandas.DataFrame = None,
+# ) -> pandas.DataFrame:
+#     return get_recommendations_based_on_songs(
+#         [energy, danceability, liveness, speechiness], df, 10
+#     )
 
+def get_song_properties(df: pandas.DataFrame, track_id: int):
+    track = df.loc[df["track_id"] == track_id]
+    return track
 
 pandas.set_option("display.max_columns", None)

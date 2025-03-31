@@ -22,7 +22,11 @@ function App() {
         const accessToken = await SpotifyHelper.getSpotifyToken(code);
         if (accessToken) {
           sessionStorage.setItem("access_token", accessToken);
-          const profilePic = await SpotifyHelper.getSpotifyProfile(accessToken);
+          const userData = await SpotifyHelper.getSpotifyProfile(accessToken);
+          const profilePic = userData.profilePicture;
+          const id = userData.id;
+
+          sessionStorage.setItem("id", id);
           setProfilePicture(profilePic);
         }
       }

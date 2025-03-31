@@ -21,8 +21,10 @@ function SelectedSong({ selectedSong, onClose }) {
               </p>
               <p>
                 <span className="label">Genre:</span>{" "}
-                {selectedSong.genre[0].toUpperCase() +
-                  selectedSong.genre.slice(1)}
+                {selectedSong.genre
+                  ? selectedSong.genre[0].toUpperCase() +
+                    selectedSong.genre.slice(1)
+                  : "Unknown"}
               </p>
               <p>
                 <span className="label">BPM:</span> {selectedSong.bpm}

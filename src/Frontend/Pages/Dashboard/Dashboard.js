@@ -61,18 +61,19 @@ function Dashboard() {
     const genres = genreFilter;
 
     try {
-      const recommendedTracks = await FilterHelper.getFilteredSongs(
-        bpmLow,
-        bpmHigh,
-        genres
-      );
-
       const accessToken = sessionStorage.getItem("access_token");
 
       if (accessToken) {
+        const recommendedTracks = await FilterHelper.getFilteredSongs(
+          bpmLow,
+          bpmHigh,
+          genres,
+          accessToken
+        );
+
         const songs = await SpotifyHelper.getTracksInfo(
           accessToken,
-          recommendedTracks
+          recommendedTracks ? recommendedTracks : []
         );
 
         const formattedSongs = songs.map((song) => ({

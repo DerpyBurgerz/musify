@@ -1,7 +1,8 @@
 class FilterHelper {
-  static getFilteredSongs = async (bpmlow, bpmhigh, genres) => {
+  static getFilteredSongs = async (bpmlow, bpmhigh, genres, accessToken) => {
+    const id = sessionStorage.getItem("id");
     try {
-      let url = `http://127.0.0.1:8000/filteredSongs/?bpmlow=${bpmlow}&bpmhigh=${bpmhigh}`;
+      let url = `http://127.0.0.1:8000/filteredSongs/?id=${id}&bpmlow=${bpmlow}&bpmhigh=${bpmhigh}&accessToken=${accessToken}`;
       if (genres) {
         url += `&genres=${genres}`;
       }

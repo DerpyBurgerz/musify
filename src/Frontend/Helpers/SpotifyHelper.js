@@ -3,7 +3,6 @@ class SpotifyHelper {
     try {
       const response = await fetch(`http://127.0.0.1:8000/spotify/code`);
       const data = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
       console.error("Error while fetching", error);
@@ -52,9 +51,13 @@ class SpotifyHelper {
       }
 
       const userData = await response.json();
-      return userData.images && userData.images.length > 0
-        ? userData.images[0].url
-        : "";
+      return {
+        profileImage:
+          userData.images && userData.images.length > 0
+            ? userData.images[0].url
+            : "",
+        id: userData.id || "",
+      };
     } catch (error) {
       console.error("Error fetching Spotify profile:", error);
       return "";
@@ -64,6 +67,10 @@ class SpotifyHelper {
   static getTracksInfo = async (accessToken, recommendedTracks) => {
     try {
       const trackIds = recommendedTracks.map((track) => track.track_id);
+      if (trackIds.length === 0) {
+        return [];
+      }
+
       const trackIdString = trackIds.join(",");
       const response = await fetch(
         `https://api.spotify.com/v1/tracks?ids=${trackIdString}`,
