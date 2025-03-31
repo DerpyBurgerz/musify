@@ -32,7 +32,7 @@ def test_function():
         "speechiness",
         "tempo",
     ]
-    df = pandas.read_csv("high_popularity_spotify_data.csv", usecols=column_names)
+    df = pandas.read_csv("spotify_data.csv", usecols=column_names)
 
     # We normalize the bpm by dividing every bpm by the highest bpm found in the dataset
     max_bpm = df["tempo"].max()

@@ -97,6 +97,57 @@
   text-align: center;
 }
 
+.Skeleton {
+  background: #f9f9f9;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.SkeletonText {
+  width: 80%;
+  height: 12px;
+  background: #d2d2d2;
+  border-radius: 5px;
+  margin: 5px 0;
+  animation: blink 1.5s infinite;
+}
+
+.SkeletonImage {
+  width: 68px;
+  height: 68px;
+  background: #d2d2d2;
+  border-radius: 10px;
+  animation: blink 1.5s infinite;
+}
+
+.SkeletonText.SongName {
+  width: 80%;
+}
+
+.SkeletonText.SongArtist {
+  width: 60%;
+}
+
+.SkeletonText.SongDuration {
+  width: 14%;
+  height: 10px;
+  margin-top: auto;
+  margin-bottom: 0px;
+}
+
+@keyframes blink {
+  0% {
+    background-color: #d2d2d2;
+  }
+  50% {
+    background-color: #e5e5e5;
+  }
+  100% {
+    background-color: #d2d2d2;
+  }
+}
 .recommended-songlist-container {
   height: 70vh;
   overflow-y: scroll;

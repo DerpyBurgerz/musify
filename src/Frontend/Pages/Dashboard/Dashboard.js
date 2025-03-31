@@ -14,6 +14,7 @@ import FilterHelper from "../../Helpers/FilterHelper";
 function Dashboard() {
   const [selectedSong, setSelectedSong] = useState(null);
   const [songList, setSongList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [accessToken, setAccessToken] = useState(
     sessionStorage.getItem("access_token")
@@ -53,38 +54,46 @@ function Dashboard() {
   }, [accessToken]);
 
   const updateRecommendedSongs = async () => {
+    setIsLoading(true);
+
     const bpmLow = bpmRangeFilter[0];
     const bpmHigh = bpmRangeFilter[1];
     const genres = genreFilter;
 
-    const recommendedTracks = await FilterHelper.getFilteredSongs(
-      bpmLow,
-      bpmHigh,
-      genres
-    );
-
-    const accessToken = sessionStorage.getItem("access_token");
-
-    if (accessToken) {
-      const songs = await SpotifyHelper.getTracksInfo(
-        accessToken,
-        recommendedTracks
+    try {
+      const recommendedTracks = await FilterHelper.getFilteredSongs(
+        bpmLow,
+        bpmHigh,
+        genres
       );
 
-      const formattedSongs = songs.map((song) => ({
-        id: song.id,
-        title: song.trackName,
-        artist: song.artistName,
-        bpm: song.bpm,
-        genre: song.genre,
-        familiarityWithArtist: Math.random(),
-        recommendedBefore: false,
-        albumCover: song.albumImage,
-        duration: song.duration,
-        link: song.link,
-        popularity: song.popularity,
-      }));
-      setSongList(formattedSongs);
+      const accessToken = sessionStorage.getItem("access_token");
+
+      if (accessToken) {
+        const songs = await SpotifyHelper.getTracksInfo(
+          accessToken,
+          recommendedTracks
+        );
+
+        const formattedSongs = songs.map((song) => ({
+          id: song.id,
+          title: song.trackName,
+          artist: song.artistName,
+          bpm: song.bpm,
+          genre: song.genre,
+          familiarityWithArtist: Math.random(),
+          recommendedBefore: false,
+          albumCover: song.albumImage,
+          duration: song.duration,
+          link: song.link,
+          popularity: song.popularity,
+        }));
+        setSongList(formattedSongs);
+      }
+    } catch (error) {
+      console.error("Error fetching recommended songs:", error);
+    } finally {
+      setIsLoading(false); // Once we are done we set loading to false to load in the songs on the dashboard
     }
   };
 
@@ -108,6 +117,7 @@ function Dashboard() {
         songs={songList}
         selectedSong={selectedSong}
         setSelectedSong={setSelectedSong}
+        isLoading={isLoading}
       />
       {selectedSong && (
         <SelectedSong

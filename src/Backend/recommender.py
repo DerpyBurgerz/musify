@@ -5,7 +5,7 @@ import csv
 import pandas
 
 # columns = ['tempo', 'energy']
-# csvFile = pandas.read_csv('.\src\Backend\high_popularity_spotify_data.csv', usecols=columns)
+# csvFile = pandas.read_csv('.\src\Backend\spotify_data.csv', usecols=columns)
 # #print(csvFile)
 
 
@@ -82,13 +82,13 @@ def get_recommendations_based_on_songs(
             "speechiness",
             "tempo",
         ]
-        df = pandas.read_csv(".\src\Backend\dataset.csv", usecols=column_names)
+        df = pandas.read_csv(".\src\Backend\spotify_data.csv", usecols=column_names)
 
         max_bpm = df["tempo"].max()
         df["tempo"] = df["tempo"] / max_bpm
 
     songs = get_average_vector(songs)
-    df["similarity"] = cosine_similarity(
+    df.loc[:, "similarity"] = cosine_similarity(
         df.loc[
             :,
             ~df.columns.isin(["track_id", "track_name", "artist_name", "genre"]),

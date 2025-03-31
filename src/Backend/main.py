@@ -46,7 +46,7 @@ def get_filtered_music(bpmlow: int, bpmhigh: int, genres: str = ""):
         "artist_name",
     ]
     csvFile = pandas.read_csv(
-        "src\Backend\high_popularity_spotify_data.csv", usecols=columns
+        "src\Backend\spotify_data.csv", usecols=columns
     )
     filter = filters(genres, (bpmlow, bpmhigh))
     data = filter.getFilteredData(csvFile)
