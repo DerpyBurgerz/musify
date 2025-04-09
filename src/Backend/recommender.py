@@ -20,6 +20,7 @@ class filters:
         if self.bpmRange is None:
             self.bpmRange = [0, 999]
 
+    
     def getFilteredData(self, data: pandas.DataFrame) -> pandas.DataFrame:
 
         if self.genreFilter:
@@ -35,11 +36,9 @@ class filters:
 
 import numpy as np
 
-
-def cosine_similarity(a: list[float], b: list[float]) -> float:
-    cos_similarity = np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
-    return cos_similarity
-
+def cosine_similarity(matrix, vector):
+    similarity = np.dot(matrix, vector) / (np.linalg.norm(matrix, axis=1) * np.linalg.norm(vector) + 1e-10)
+    return similarity
 
 def get_average_vector(ls: [[]]):
     out = [0] * len(ls[0])
@@ -72,17 +71,17 @@ def get_recommendations_based_on_songs(
         ]
         df = pandas.read_csv(".\src\Backend\spotify_data.csv", usecols=column_names)
 
-        max_bpm = df["tempo"].max()
-        df["tempo"] = df["tempo"] / max_bpm
+    df["tempo"] = df["tempo"] / 250
 
     songs = get_average_vector(songs)
+    
     df.loc[:, "similarity"] = cosine_similarity(
         df.loc[
             :,
-            ~df.columns.isin(["track_id", "track_name", "artist_name", "genre"]),
+            ["energy", "danceability", "liveness", "valence", "speechiness", "tempo"]
         ],
         songs,
-    )
+    )    
 
     df = df.drop_duplicates(subset=["track_name", "artist_name"]).sort_values(
         by=["similarity"], ascending=False
