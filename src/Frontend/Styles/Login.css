@@ -3,6 +3,10 @@
   line-height: 10px;
 }
 
+.sub-title {
+  line-height: normal;
+}
+
 .spotify-button {
   text-align: center;
   font-family: "Montserrat";
@@ -11,9 +15,10 @@
   background-color: var(--spotifyGreen);
   border: none;
   color: black;
-  padding: 1% 5%;
+  padding: 15px;
   margin-top: 15px;
   border-radius: 100px;
+  width: min(80%, 350px);
   cursor: pointer;
 }
 

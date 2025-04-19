@@ -84,6 +84,7 @@
   height: 60px;
   border-radius: 50%;
   background-color: #e0e0e0;
+  animation: blink 1.5s infinite;
 }
 
 .ProfilePicture.hidden {
@@ -92,4 +93,16 @@
 
 .ProfilePicture.visible {
   display: block;
+}
+
+@keyframes blink {
+  0% {
+    background-color: #d2d2d2;
+  }
+  50% {
+    background-color: #e5e5e5;
+  }
+  100% {
+    background-color: #d2d2d2;
+  }
 }

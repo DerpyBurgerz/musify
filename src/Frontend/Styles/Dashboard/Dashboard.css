@@ -25,11 +25,13 @@
   flex-direction: column;
   justify-self: center;
 }
+
 @media (min-width: 1500px) {
   .Recommendations {
     position: fixed;
   }
 }
+
 @media (max-width: 800px) {
   .Dashboard {
     display: flex;
@@ -44,8 +46,8 @@
   .Filters {
     flex-basis: 20%;
     height: auto;
-    max-height: 400px;
     padding: 0.5rem;
+    max-width: 100%;
     border-bottom: 1px solid #ccc;
   }
 
@@ -71,4 +73,5 @@
     flex-direction: column;
     text-align: left;
   }
+
 }

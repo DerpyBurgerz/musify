@@ -97,7 +97,7 @@ class SpotifyHelper {
         link: track.external_urls.spotify,
         popularity: track.popularity,
         bpm: Math.round(recommendedTracks[index]["tempo"]),
-        genre: recommendedTracks[index]["playlist_genre"],
+        genre: recommendedTracks[index]["genre"],
       }));
     } catch (error) {
       console.error("Error fetching recently played tracks:", error);

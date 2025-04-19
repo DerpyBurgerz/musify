@@ -33,7 +33,7 @@ from recommender import get_recommendations_based_on_songs
 
 @app.get("/filteredSongs/")
 async def get_filtered_music(id: str, bpmlow: int, bpmhigh: int, accessToken: str, genres: str = ""):
-    genres = genres.split(" ")
+    genres = genres.split(",")
     columns = [
         "tempo",
         "energy",
@@ -99,8 +99,6 @@ async def get_filtered_music(id: str, bpmlow: int, bpmhigh: int, accessToken: st
             user_data["tempo"],
         ]
     
-    print(user_data)
-
     data = get_recommendations_based_on_songs(
         [user_data], data, 50
     )

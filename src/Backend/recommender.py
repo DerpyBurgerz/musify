@@ -91,8 +91,9 @@ def get_recommendations_based_on_songs(
     if songCount != -1:
         df = df.head(songCount)
 
-    return df
+    df["tempo"] = df["tempo"] * 250
 
+    return df
 
 # def get_recommendations_based_on_custom_values(
 #     energy: float,

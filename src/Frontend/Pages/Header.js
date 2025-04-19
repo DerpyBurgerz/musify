@@ -29,6 +29,7 @@ function Header({ isLoggedIn, profilePicture, onLogout }) {
                 {!imageLoaded && <div className="ProfileSkeleton"></div>}{" "}
                 {profilePicture && (
                   <img
+                    key={profilePicture}
                     src={profilePicture}
                     className={`ProfilePicture ${
                       imageLoaded ? "visible" : "hidden"

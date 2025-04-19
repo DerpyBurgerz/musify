@@ -3,7 +3,8 @@ class FilterHelper {
     const id = sessionStorage.getItem("id");
     try {
       let url = `http://127.0.0.1:8000/filteredSongs/?id=${id}&bpmlow=${bpmlow}&bpmhigh=${bpmhigh}&accessToken=${accessToken}`;
-      if (genres) {
+      if (genres && genres.length > 0) {
+        genres.join(",");
         url += `&genres=${genres}`;
       }
       const response = await fetch(url);

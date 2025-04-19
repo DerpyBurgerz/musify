@@ -23,7 +23,7 @@ function App() {
         if (accessToken) {
           sessionStorage.setItem("access_token", accessToken);
           const userData = await SpotifyHelper.getSpotifyProfile(accessToken);
-          const profilePic = userData.profilePicture;
+          const profilePic = userData.profileImage;
           const id = userData.id;
 
           sessionStorage.setItem("id", id);
