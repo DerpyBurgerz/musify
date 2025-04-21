@@ -1,4 +1,6 @@
 import React from "react";
+import { toast } from "react-hot-toast";
+import { useState, useEffect } from "react";
 
 function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
   const handlePlayButtonPress = (song) => {
@@ -7,17 +9,22 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
     }
   };
 
-  document.querySelectorAll(".Skeleton").forEach((skeleton, index) => {
-    const songDetails = skeleton.firstChild;
-    const coverSection = skeleton.lastChild;
+  useEffect(() => {
+    if (isLoading) {
+      const skeletons = document.querySelectorAll(".Skeleton");
+      skeletons.forEach((skeleton, index) => {
+        const songDetails = skeleton.firstChild;
+        const coverSection = skeleton.lastChild;
 
-    songDetails.childNodes.forEach((child) => {
-      child.style.animationDelay = `${index * 0.1}s`;
-    });
-    coverSection.lastChild.style.animationDelay = `${index * 0.1}s`;
-  });
+        songDetails.childNodes.forEach((child) => {
+          child.style.animationDelay = `${index * 0.1}s`;
+        });
+        coverSection.lastChild.style.animationDelay = `${index * 0.1}s`;
+      });
+    }
+  }, [isLoading]);
 
-  const handleCreatePlaylist = (e) => {
+  const handleCreatePlaylist = () => {
     // Create a new empty playlist
     const userId = sessionStorage.getItem("id");
     const accessToken = sessionStorage.getItem("access_token");
@@ -59,7 +66,11 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
           body: JSON.stringify({ uris: trackURIs }),
         });
       })
-      .catch((err) => console.error(`Error while creating playlist: ${err}`));
+      .then(toast.success("Succesfully created your playlist!"))
+      .catch((err) => {
+        console.error(err);
+        toast.error("Something went wrong while creating your playlist.");
+      });
   };
 
   return (
@@ -104,6 +115,7 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
                           e.stopPropagation();
                           handlePlayButtonPress(song);
                         }}
+                        aria-label={`Play ${song.title} by ${song.artist}`}
                       >
                         play_arrow
                       </span>

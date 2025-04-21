@@ -55,6 +55,7 @@ function Dashboard() {
 
   const updateRecommendedSongs = async () => {
     setIsLoading(true);
+
     // Disable the create playlist button
     const playlistButton = document.querySelector(".create-playlist-button");
     if (playlistButton) playlistButton.disabled = true;

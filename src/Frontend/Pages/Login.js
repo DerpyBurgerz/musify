@@ -1,12 +1,15 @@
 import React from "react";
 import SpotifyHelper from "../Helpers/SpotifyHelper";
-
+import { toast } from "react-hot-toast";
 import "../Styles/Login.css";
 
 const Login = () => {
   const loginRedirect = async () => {
+    toast.loading("Logging you in...");
     const oauthcode = await SpotifyHelper.getOAuthCodeUrl();
-    if (oauthcode) window.location = oauthcode;
+    if (oauthcode) {
+      window.location = oauthcode;
+    }
   };
 
   return (

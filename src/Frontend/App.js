@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import Redirect from "./Pages/Redirect";
 import Header from "./Pages/Header";
 import SpotifyHelper from "./Helpers/SpotifyHelper";
+import toast, { Toaster } from "react-hot-toast";
 
 import "./Styles/App.css";
 
@@ -48,6 +49,7 @@ function App() {
         profilePicture={profilePicture}
         onLogout={handleLogout}
       />
+      <Toaster />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/redirect" element={<Redirect />} />
