@@ -14,6 +14,7 @@ load_dotenv()
 REACT_APP_REDIRECT_URI = os.getenv('REACT_APP_REDIRECT_URI')
 REACT_APP_CLIENT_ID = os.getenv('REACT_APP_CLIENT_ID')
 REACT_APP_CLIENT_SECRET = os.getenv('REACT_APP_CLIENT_SECRET')
+REACT_APP_CLIENT_SCOPE = os.getenv('REACT_APP_CLIENT_SCOPE')
 
 def generateRandomString(length):
     text = ""
@@ -24,11 +25,10 @@ def generateRandomString(length):
     return text
 
 def getOAuthCodeUrl():
-    scope = "user-top-read"
     url = "https://accounts.spotify.com/authorize"
     url += "?response_type=code"
     url += f"&client_id={urllib.parse.quote(REACT_APP_CLIENT_ID)}"
-    url += f"&scope={scope}"
+    url += f"&scope={REACT_APP_CLIENT_SCOPE}"
     url += f"&state={urllib.parse.quote(generateRandomString(16))}"
     url += f"&redirect_uri={urllib.parse.quote(REACT_APP_REDIRECT_URI)}"
     return url

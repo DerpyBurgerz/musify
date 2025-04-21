@@ -55,6 +55,9 @@ function Dashboard() {
 
   const updateRecommendedSongs = async () => {
     setIsLoading(true);
+    // Disable the create playlist button
+    const playlistButton = document.querySelector(".create-playlist-button");
+    if (playlistButton) playlistButton.disabled = true;
 
     const bpmLow = bpmRangeFilter[0];
     const bpmHigh = bpmRangeFilter[1];
@@ -95,6 +98,9 @@ function Dashboard() {
       console.error("Error fetching recommended songs:", error);
     } finally {
       setIsLoading(false); // Once we are done we set loading to false to load in the songs on the dashboard
+      const playlistButton = document.querySelector(".create-playlist-button");
+      if (playlistButton) playlistButton.disabled = false;
+      // https://stackoverflow.com/questions/13831601/disabling-and-enabling-a-html-input-button
     }
   };
 

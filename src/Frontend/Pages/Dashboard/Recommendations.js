@@ -17,6 +17,51 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
     coverSection.lastChild.style.animationDelay = `${index * 0.1}s`;
   });
 
+  const handleCreatePlaylist = (e) => {
+    // Create a new empty playlist
+    const userId = sessionStorage.getItem("id");
+    const accessToken = sessionStorage.getItem("access_token");
+
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let currentDate = `${day}-${month}-${year}`;
+
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    };
+
+    const body = {
+      name: `musify's recommendations (${currentDate})`,
+      description: "50 songs recommended by musify.",
+      public: false,
+    };
+
+    // Create the playlist
+    fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        const playlistId = response.id;
+
+        // Add all our tracks
+        const trackURIs = songs.map((song) => `spotify:track:${song.id}`);
+        fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify({ uris: trackURIs }),
+        });
+      })
+      .catch((err) => console.error(`Error while creating playlist: ${err}`));
+  };
+
   return (
     <div className="Recommendations">
       <h2>Recommendations for you.</h2>
@@ -69,7 +114,14 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
         </div>
       </div>
       <div className="button-wrapper">
-        <button className="create-playlist-button">Create Playlist</button>
+        <button
+          className="create-playlist-button"
+          onClick={(e) => {
+            handleCreatePlaylist(e);
+          }}
+        >
+          Create Playlist
+        </button>
       </div>
     </div>
   );

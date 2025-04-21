@@ -16,7 +16,6 @@
 }
 
 .Recommendations {
-  cursor: pointer;
   padding: 1rem;
   box-sizing: border-box;
   max-height: 100vh;
