@@ -20,7 +20,6 @@ class filters:
         if self.bpmRange is None:
             self.bpmRange = [0, 999]
 
-    
     def getFilteredData(self, data: pandas.DataFrame) -> pandas.DataFrame:
 
         if self.genreFilter:
@@ -36,9 +35,13 @@ class filters:
 
 import numpy as np
 
+
 def cosine_similarity(matrix, vector):
-    similarity = np.dot(matrix, vector) / (np.linalg.norm(matrix, axis=1) * np.linalg.norm(vector) + 1e-10)
+    similarity = np.dot(matrix, vector) / (
+        np.linalg.norm(matrix, axis=1) * np.linalg.norm(vector) + 1e-10
+    )
     return similarity
+
 
 def get_average_vector(ls: [[]]):
     out = [0] * len(ls[0])
@@ -49,7 +52,10 @@ def get_average_vector(ls: [[]]):
 
 
 def get_recommendations_based_on_songs(
-    songs: list[list[float]], df: pandas.DataFrame = None, songCount: int = -1
+    songs: list[list[float]],
+    df: pandas.DataFrame = None,
+    songCount: int = -1,
+    user_genres=None,
 ) -> pandas.DataFrame:
     """
     :param songs: This is a list of songs that the recommendation will be based on
@@ -69,19 +75,32 @@ def get_recommendations_based_on_songs(
             "speechiness",
             "tempo",
         ]
-        df = pandas.read_csv(".\src\Backend\spotify_data.csv", usecols=column_names)
+        df = pandas.read_csv(".\\src\\Backend\\spotify_data.csv", usecols=column_names)
 
     df["tempo"] = df["tempo"] / 250
 
     songs = get_average_vector(songs)
-    
+
     df.loc[:, "similarity"] = cosine_similarity(
         df.loc[
-            :,
-            ["energy", "danceability", "liveness", "valence", "speechiness", "tempo"]
+            :, ["energy", "danceability", "liveness", "valence", "speechiness", "tempo"]
         ],
         songs,
-    )    
+    )
+
+    if user_genres:
+        genre_weights = []
+        for genre in df["genre"]:
+            weight = (
+                1.5
+                if any(
+                    user_genre.lower() in genre.lower() for user_genre in user_genres
+                )
+                else 1.0
+            )
+            genre_weights.append(weight)
+
+        df["similarity"] = df["similarity"] * genre_weights
 
     df = df.drop_duplicates(subset=["track_name", "artist_name"]).sort_values(
         by=["similarity"], ascending=False
@@ -95,19 +114,22 @@ def get_recommendations_based_on_songs(
 
     return df
 
+
 # def get_recommendations_based_on_custom_values(
 #     energy: float,
 #     danceability: float,
 #     liveness: float,
 #     speechiness: float,
-#     df: pandas.DataFrame = None,
+#     df: pandas.DataFrame = None,s
 # ) -> pandas.DataFrame:
 #     return get_recommendations_based_on_songs(
 #         [energy, danceability, liveness, speechiness], df, 10
 #     )
 
+
 def get_song_properties(df: pandas.DataFrame, track_id: int):
     track = df.loc[df["track_id"] == track_id]
     return track
+
 
 pandas.set_option("display.max_columns", None)

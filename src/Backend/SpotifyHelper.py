@@ -11,10 +11,11 @@ from fastapi import FastAPI
 
 load_dotenv()
 
-REACT_APP_REDIRECT_URI = os.getenv('REACT_APP_REDIRECT_URI')
-REACT_APP_CLIENT_ID = os.getenv('REACT_APP_CLIENT_ID')
-REACT_APP_CLIENT_SECRET = os.getenv('REACT_APP_CLIENT_SECRET')
-REACT_APP_CLIENT_SCOPE = os.getenv('REACT_APP_CLIENT_SCOPE')
+REACT_APP_REDIRECT_URI = os.getenv("REACT_APP_REDIRECT_URI")
+REACT_APP_CLIENT_ID = os.getenv("REACT_APP_CLIENT_ID")
+REACT_APP_CLIENT_SECRET = os.getenv("REACT_APP_CLIENT_SECRET")
+REACT_APP_CLIENT_SCOPE = os.getenv("REACT_APP_CLIENT_SCOPE")
+
 
 def generateRandomString(length):
     text = ""
@@ -23,6 +24,7 @@ def generateRandomString(length):
         randomInt = random.randint(0, length - 1)
         text += possible[randomInt]
     return text
+
 
 def getOAuthCodeUrl():
     url = "https://accounts.spotify.com/authorize"
@@ -33,11 +35,14 @@ def getOAuthCodeUrl():
     url += f"&redirect_uri={urllib.parse.quote(REACT_APP_REDIRECT_URI)}"
     return url
 
+
 async def getTrackImage(trackid: str, token: str):
     try:
         headers = {"Authorization": f"Bearer {token}"}
         async with httpx.AsyncClient() as client:
-            response = await client.get(f"https://api.spotify.com/v1/tracks/{trackid}", headers=headers )
+            response = await client.get(
+                f"https://api.spotify.com/v1/tracks/{trackid}", headers=headers
+            )
         data = response.json()
         image = data["album"]["images"][0]["url"]
 
@@ -45,17 +50,36 @@ async def getTrackImage(trackid: str, token: str):
     except Exception as e:
         print(f"Error: {e}")
         return None
-    
+
+
 async def getTopTracks(accessToken, limit):
     try:
         headers = {"Authorization": f"Bearer {accessToken}"}
         async with httpx.AsyncClient() as client:
-            response = await client.get(f"https://api.spotify.com/v1/me/top/tracks?limit={limit}", headers=headers )
+            response = await client.get(
+                f"https://api.spotify.com/v1/me/top/tracks?limit={limit}",
+                headers=headers,
+            )
         data = response.json()
         return data
     except Exception as e:
         print(f"Error: {e}")
         return None
+
+
+async def getArtist(access_token: str, artist_id: str) -> dict:
+    try:
+        headers = {"Authorization": f"Bearer {access_token}"}
+        async with httpx.AsyncClient() as client:
+            response = await client.get(
+                f"https://api.spotify.com/v1/artists/{artist_id}", headers=headers
+            )
+            data = response.json()
+            return data
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
 
 # @app.get("/spotify/token")
 # async def getSpotifyToken(code):
@@ -84,7 +108,6 @@ async def getTopTracks(accessToken, limit):
 #     except Exception as e:
 #         print(f"Error: {e}")
 #         return None
-
 
 
 # def convertDuration(ms: int) -> str:
