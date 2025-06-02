@@ -3,6 +3,8 @@ import { toast } from "react-hot-toast";
 import { useState, useEffect } from "react";
 
 function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
+  const [selectedSongs, setSelectedSongs] = useState([]);
+
   const handlePlayButtonPress = (song) => {
     if (song.link) {
       window.open(song.link, "_blank");
@@ -48,6 +50,8 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
       public: false,
     };
 
+    const songsToExport = selectedSongs.length > 0 ? selectedSongs : songs;
+
     // Create the playlist
     fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
       method: "POST",
@@ -58,8 +62,10 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
       .then((response) => {
         const playlistId = response.id;
 
-        // Add all our tracks
-        const trackURIs = songs.map((song) => `spotify:track:${song.id}`);
+        const trackURIs = songsToExport.map(
+          (song) => `spotify:track:${song.id}`
+        );
+
         fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
           method: "POST",
           headers: headers,
@@ -97,10 +103,28 @@ function Recommendations({ songs, selectedSong, setSelectedSong, isLoading }) {
                   className={`SongCard ${
                     selectedSong?.id === song.id ? "Selected" : ""
                   }`}
-                  onClick={() =>
-                    setSelectedSong(selectedSong?.id === song.id ? null : song)
-                  }
+                  onClick={(e) => {
+                    if (e.target.type === "checkbox") return;
+
+                    setSelectedSong(selectedSong?.id === song.id ? null : song);
+                  }}
                 >
+                  <input
+                    className="SongCheckbox"
+                    type="checkbox"
+                    checked={selectedSongs.some((s) => s.id === song.id)}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      setSelectedSongs((prev) => {
+                        if (prev.some((s) => s.id === song.id)) {
+                          return prev.filter((s) => s.id !== song.id);
+                        } else {
+                          return [...prev, song];
+                        }
+                      });
+                    }}
+                    aria-label={`Select ${song.title} by ${song.artist}`}
+                  />
                   <div className="SongDetails">
                     <h3 className="SongName">{song.title}</h3>
                     <p className="SongArtist">{song.artist}</p>

@@ -199,6 +199,9 @@
   cursor: not-allowed;
 }
 
+.SongCheckbox {
+  padding-right: 4px;
+}
 
 @media (max-width: 1000px) {
   .SongName {
