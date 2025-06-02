@@ -39,6 +39,10 @@ function SelectedSong({ selectedSong, onClose }) {
                 <span className="label">Popularity:</span>{" "}
                 {selectedSong.popularity}%
               </p>
+              <p>
+                <span className="label">Year of release:</span>{" "}
+                {selectedSong.releaseYear}
+              </p>
             </div>
             <div className="SelectedSongCover">
               <img

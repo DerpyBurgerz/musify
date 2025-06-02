@@ -26,6 +26,10 @@ function Dashboard() {
   const [bpmRangeInput, setBpmRangeInput] = useState([0, 220]);
   const [familiarityFilter, setFamiliarityFilter] = useState(0.5);
   const [isRerecommendAllowed, setIsRerecommendAllowed] = useState(true);
+  const [releaseYearInput, setReleaseYearRangeInput] = useState([
+    1900,
+    new Date().getFullYear(),
+  ]);
 
   useEffect(() => {
     if (!accessToken || songList.length > 0) {
@@ -63,6 +67,8 @@ function Dashboard() {
     const bpmLow = bpmRangeFilter[0];
     const bpmHigh = bpmRangeFilter[1];
     const genres = genreFilter;
+    const minYear = releaseYearInput[0];
+    const maxYear = releaseYearInput[1];
 
     try {
       const accessToken = sessionStorage.getItem("access_token");
@@ -92,8 +98,15 @@ function Dashboard() {
           duration: song.duration,
           link: song.link,
           popularity: song.popularity,
+          releaseYear: song.releaseYear,
         }));
-        setSongList(formattedSongs);
+
+        // Filter songs based on release year
+        const filteredSongs = formattedSongs.filter(
+          (song) => song.releaseYear >= minYear && song.releaseYear <= maxYear
+        );
+
+        setSongList(filteredSongs);
       }
     } catch (error) {
       console.error("Error fetching recommended songs:", error);
@@ -120,6 +133,8 @@ function Dashboard() {
         setIsRerecommendAllowed={setIsRerecommendAllowed}
         updateRecommendedSongs={updateRecommendedSongs}
         setSongList={setSongList}
+        releaseYearInput={releaseYearInput}
+        setReleaseYearRangeInput={setReleaseYearRangeInput}
       />
       <Recommendations
         songs={songList}

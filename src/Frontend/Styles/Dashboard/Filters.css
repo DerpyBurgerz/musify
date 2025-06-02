@@ -103,16 +103,19 @@ select {
   box-shadow: 0 0 10px rgba(0, 123, 255, 0.5) !important;
 }
 
+
 .BpmFilter {
   margin-bottom: 0px;
 }
 
+.releaseYearFilter,
 .BpmFilter h3 {
   font-size: 16px;
   padding-bottom: 5px;
   margin: 0px;
 }
 
+.releaseYearSlider,
 .BpmSlider {
   display: flex;
   align-items: center;
@@ -121,6 +124,7 @@ select {
   z-index: -1;
 }
 
+.releaseYearDisplay,
 .BpmDisplay {
   width: 50px;
   padding: 3px;

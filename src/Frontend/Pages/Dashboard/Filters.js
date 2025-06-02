@@ -11,6 +11,8 @@ function Filters({
   setBpmRangeInput,
   setBpmRangeFilter,
   setSelectedSong,
+  releaseYearInput,
+  setReleaseYearRangeInput,
   familiarityFilter,
   setFamiliarityFilter,
   isRerecommendAllowed,
@@ -164,6 +166,24 @@ function Filters({
             <div className="BpmDisplay">
               {bpmRangeInput[1] === 220 ? "220+" : bpmRangeInput[1]}
             </div>
+          </div>
+        </div>
+        <div className="releaseYearFilter">
+          <h3>Release Year:</h3>
+          <div className="releaseYearSlider">
+            <div className="releaseYearDisplay">{releaseYearInput[0]}</div>
+            <Slider
+              range
+              min={1900}
+              max={new Date().getFullYear()}
+              step={1}
+              value={releaseYearInput}
+              onChange={(value) => {
+                setReleaseYearRangeInput(value);
+                setSelectedSong(null);
+              }}
+            />
+            <div className="releaseYearDisplay">{releaseYearInput[1]}</div>
           </div>
         </div>
         <div className="ArtistFamiliarityFilter">

@@ -98,6 +98,7 @@ class SpotifyHelper {
         popularity: track.popularity,
         bpm: Math.round(recommendedTracks[index]["tempo"]),
         genre: recommendedTracks[index]["genre"],
+        releaseYear: track.album.release_date.split("-")[0],
       }));
     } catch (error) {
       console.error("Error fetching recently played tracks:", error);
