@@ -30,7 +30,7 @@ def get_oauth_code() -> str:
 
 @app.get("/filteredSongs/")
 async def get_filtered_music(
-    id: str, bpmlow: int, bpmhigh: int, accessToken: str, genres: str = ""
+    id: str, bpmlow: int, bpmhigh: int, accessToken: str, minYear: int, maxYear: int,  genres: str = ""
 ):
     genres = genres.split(",")
     columns = [
@@ -44,9 +44,10 @@ async def get_filtered_music(
         "speechiness",
         "track_name",
         "artist_name",
+        "year",
     ]
     csvFile = pandas.read_csv("src\\Backend\\spotify_data.csv", usecols=columns)
-    filter = filters(genres, (bpmlow, bpmhigh))
+    filter = filters(genres, (bpmlow, bpmhigh), (minYear, maxYear))
     data = filter.getFilteredData(csvFile)
 
     user_genres = set()

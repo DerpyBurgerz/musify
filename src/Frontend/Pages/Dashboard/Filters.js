@@ -20,7 +20,7 @@ function Filters({
   updateRecommendedSongs,
   setSongList,
 }) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleBpmChange = (value) => {
     setBpmRangeInput(value);

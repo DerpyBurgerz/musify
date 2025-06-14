@@ -78,8 +78,11 @@ function Dashboard() {
           bpmLow,
           bpmHigh,
           genres,
+          minYear,
+          maxYear,
           accessToken
         );
+        console.log("Recommended tracks:", recommendedTracks);
 
         const songs = await SpotifyHelper.getTracksInfo(
           accessToken,
@@ -101,12 +104,7 @@ function Dashboard() {
           releaseYear: song.releaseYear,
         }));
 
-        // Filter songs based on release year
-        const filteredSongs = formattedSongs.filter(
-          (song) => song.releaseYear >= minYear && song.releaseYear <= maxYear
-        );
-
-        setSongList(filteredSongs);
+        setSongList(formattedSongs);
       }
     } catch (error) {
       console.error("Error fetching recommended songs:", error);

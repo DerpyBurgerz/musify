@@ -13,12 +13,15 @@ from dataclasses import dataclass
 class filters:
     genreFilter: list[str]
     bpmRange: tuple[int, int]
+    yearRange: tuple[int, int]
 
     def __post_init__(self):
         if self.genreFilter is None or self.genreFilter == [""]:
             self.genreFilter = []
         if self.bpmRange is None:
             self.bpmRange = [0, 999]
+        if self.yearRange is None:
+            self.yearRange = [0, 9999]
 
     def getFilteredData(self, data: pandas.DataFrame) -> pandas.DataFrame:
 
@@ -27,9 +30,13 @@ class filters:
                 data["genre"].isin(self.genreFilter)
                 & (data["tempo"] >= self.bpmRange[0])
                 & (data["tempo"] <= self.bpmRange[1])
+                & (data["year"] >= self.yearRange[0])
+                & (data["year"] <= self.yearRange[1])
             ]
         return data[
-            (data["tempo"] >= self.bpmRange[0]) & (data["tempo"] <= self.bpmRange[1])
+            
+            (data["tempo"] >= self.bpmRange[0]) & (data["tempo"] <= self.bpmRange[1]) & (data["year"] >= self.yearRange[0])
+                & (data["year"] <= self.yearRange[1])
         ]
 
 
@@ -74,6 +81,7 @@ def get_recommendations_based_on_songs(
             "valence",
             "speechiness",
             "tempo",
+            "year",
         ]
         df = pandas.read_csv(".\\src\\Backend\\spotify_data.csv", usecols=column_names)
 
